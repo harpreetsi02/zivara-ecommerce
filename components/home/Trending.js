@@ -45,7 +45,7 @@ export default function Trending() {
   };
 
   return (
-    <section className="py-10 bg-gray-100 text-center overflow-hidden">
+    <section className="py-10 text-center overflow-hidden">
 
       {/* Heading */}
       <h2 className={`${lemonMilk.className} text-2xl text-black uppercase font-light tracking-wide`}>
@@ -56,7 +56,7 @@ export default function Trending() {
       </h1>
 
       {/* Circular Carousel */}
-      <div className="relative flex justify-center items-center h-[280px]">
+      <div className="relative flex justify-center items-center h-70">
         {trending.map((item, index) => {
           const { x, y, scale, opacity, z, blur } = getCardStyle(index);
           const isCenter = ((index - current + total) % total) === 0;

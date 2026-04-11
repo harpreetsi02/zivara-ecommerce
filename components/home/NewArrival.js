@@ -13,7 +13,6 @@ const NewArrival = () => {
   const scroll = (dir) => {
     const container = scrollRef.current;
     if (!container) return;
-    // 2 cards wide — each card ~160px + 16px gap = ~176px, times 2
     const scrollAmount = 352;
     container.scrollBy({ left: dir === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
   };
@@ -22,12 +21,12 @@ const NewArrival = () => {
     <section className="px-4 text-black py-6">
 
       {/* Heading + Arrows */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-center mb-4">
         <h2 className={`${lemonMilk.className} flex items-center tracking-wider text-lg text-black font-semibold`}>
           <span className="text-4xl">N</span>ew Arrivals
         </h2>
 
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <button
             onClick={() => scroll("left")}
             className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm"
@@ -40,7 +39,7 @@ const NewArrival = () => {
           >
             <i className="ri-arrow-right-s-line"></i>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Scroll Container — exactly 2 cards visible */}

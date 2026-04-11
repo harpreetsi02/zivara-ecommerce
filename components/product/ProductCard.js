@@ -5,7 +5,7 @@ import Link from "next/link";
 const ProductCard = ({ item }) => {
   return (
     <Link href={`/product/${item.id}`}>
-      <div className="min-w-[150px] flex-shrink-0 cursor-pointer">
+      <div className="min-w-37.5 shrink-0 cursor-pointer">
         <img
           src={item.image}
           alt={item.name}

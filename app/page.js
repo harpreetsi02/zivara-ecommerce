@@ -9,13 +9,13 @@ import 'remixicon/fonts/remixicon.css'
 
 const Home = () => {
   return(
-    <div className="bg-amber-50 mt-15 h-full overflow-hidden">
+    <div className=" z-20 mt-15 h-full overflow-hidden">
       <HeroGrid/>
+      <SpringEdit/> 
       <NewArrival/>
       <Categories/>
       <Trending/>
       <PriceDrop/>
-      <SpringEdit/>
       <ShopNow/>
     </div>
   )

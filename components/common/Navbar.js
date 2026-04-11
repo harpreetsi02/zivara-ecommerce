@@ -131,12 +131,22 @@ export default function Navbar() {
           {/* Sidebar panel */}
           <div className="absolute left-0 top-0 w-[75%] h-full bg-white p-5 overflow-y-auto">
 
-            {/* Close */}
-            <div className="flex justify-end mb-5">
-              <i
-                className="ri-close-line text-2xl cursor-pointer"
-                onClick={() => setMenuOpen(false)}
-              ></i>
+            <div className="flex items-center justify-between pb-5">
+              {/* Logo */}
+              <div className="relative inline-block" onClick={() => handleNavClick("/")}>
+                <img className="rotate-20 w-20 translate-x-7" src="/images/lips.png" />
+                <h1 className={`${lemonMilk.className} absolute inset-0 flex items-center justify-center text-sm tracking-widest uppercase`}>
+                  <span className="text-4xl">z</span>ivara
+                </h1>
+              </div>
+
+              {/* Close */}
+              <div className="flex justify-end mb-5">
+                <i
+                  className="ri-close-line text-2xl cursor-pointer"
+                  onClick={() => setMenuOpen(false)}
+                ></i>
+              </div>
             </div>
 
             <div className="space-y-6">
@@ -188,8 +198,14 @@ export default function Navbar() {
                   ))}
                 </ul>
               </div>
-
             </div>
+            {/* BOTTOM RIGHT — Only lips */}
+              <div className="flex mt-6">
+                <img
+                  className="-rotate-20 w-40 opacity-75 absolute bottom-10 right-5"
+                  src="/images/lips.png"
+                />
+              </div>
           </div>
         </div>
       )}

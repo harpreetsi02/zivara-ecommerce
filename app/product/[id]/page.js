@@ -51,10 +51,10 @@ export default function ProductPage() {
   };
 
   return (
-    <div className="mt-16 pb-32">
+    <div className="mt-16 pb-32 text-black">
 
       {/* PRODUCT IMAGE */}
-      <div className="relative w-full h-[420px] bg-gray-100">
+      <div className="relative w-full h-105 bg-gray-100">
         <img
           src={product.image}
           alt={product.name}
@@ -79,7 +79,7 @@ export default function ProductPage() {
 
           <button
             onClick={handleWishlist}
-            className="flex-shrink-0 mt-1"
+            className="shrink-0 mt-1"
           >
             <i className={`${liked ? "ri-heart-fill text-red-500" : "ri-heart-line text-gray-400"} text-2xl`}></i>
           </button>
@@ -131,7 +131,7 @@ export default function ProductPage() {
 
         <button
           onClick={handleWishlist}
-          className="flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-3 px-4 text-sm font-medium w-2/5"
+          className="flex items-center text-gray-600 font-semibold justify-center gap-2 border border-gray-300 rounded-lg py-3 px-4 text-sm w-2/5"
         >
           <i className={`${liked ? "ri-heart-fill text-red-500" : "ri-heart-line"} text-lg`}></i>
           WISHLIST
@@ -139,7 +139,7 @@ export default function ProductPage() {
 
         <button
           onClick={handleAddToCart}
-          className={`flex-1 py-3 rounded-lg text-white text-sm font-medium transition-all ${
+          className={`flex-1 py-3 rounded-lg font-semibold text-white text-sm transition-all ${
             added ? "bg-green-600" : "bg-red-500"
           }`}
         >
