@@ -149,7 +149,7 @@ export default function Navbar() {
           ></div>
 
           {/* Sidebar panel */}
-          <div className="absolute left-0 top-0 w-[75%] h-full bg-white p-5 overflow-y-auto">
+          <div className="absolute left-0 top-0 w-[85%] h-full bg-white p-5 overflow-y-auto">
 
             <div className="flex items-center justify-between pb-5">
               {/* Logo */}

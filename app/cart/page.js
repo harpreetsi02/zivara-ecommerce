@@ -200,7 +200,7 @@ export default function CartPage() {
           </div>
 
           {/* BILLING DETAILS */}
-          <div className="bg-white mt-2 px-4 py-4">
+          <div className="bg-white mb-20 mt-2 px-4 py-4">
             <h3 className="text-sm font-semibold mb-3 tracking-wide">BILLING DETAILS</h3>
 
             <div className="space-y-2 text-sm">

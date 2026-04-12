@@ -15,7 +15,7 @@ const priceDropItems = products
 
 export default function PriceDropPage() {
   return (
-    <div className="mt-16 bg-white px-4 py-6">
+    <div className="mt-16 px-4 py-6">
 
       {/* Heading */}
       <div className="mb-6">
