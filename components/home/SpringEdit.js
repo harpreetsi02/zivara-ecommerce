@@ -66,7 +66,7 @@ export default function SpringEdit() {
 
   return (
     <section className="py-10">
-      <h2 className={`${lemonMilk.className} text-black p-4 flex items-center justify-center uppercase`}><span className="text-4xl">c</span>ollections:</h2>
+      <h2 className={`${lemonMilk.className} text-black p-4 tracking-wider flex items-center justify-center uppercase`}><span className="text-5xl -translate-y-px translate-x-1.5">c</span><span className="text-2xl">o</span>llections</h2>
       <div className="relative overflow-hidden">
 
         {/* Slides */}

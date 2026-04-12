@@ -4,7 +4,7 @@ import { lemonMilk } from "@/app/fonts";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-300 text-gray-700 mt-16">
+    <footer className="border-t border-gray-300 text-gray-700">
 
       {/* Top Section */}
       <div className="max-w-4xl mx-auto text-center px-6 py-12">

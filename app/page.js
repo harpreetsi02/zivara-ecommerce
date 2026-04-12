@@ -9,7 +9,7 @@ import 'remixicon/fonts/remixicon.css'
 
 const Home = () => {
   return(
-    <div className=" z-20 mt-15 h-full overflow-hidden">
+    <div className="z-20 mt-15 h-full overflow-hidden">
       <HeroGrid/>
       <SpringEdit/> 
       <NewArrival/>

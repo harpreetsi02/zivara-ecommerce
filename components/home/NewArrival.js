@@ -26,7 +26,7 @@ const NewArrival = () => {
           <span className="text-4xl">N</span>ew Arrivals
         </h2>
 
-        {/* <div className="flex gap-2">
+        <div className="gap-2 hidden md:block">
           <button
             onClick={() => scroll("left")}
             className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm"
@@ -39,7 +39,7 @@ const NewArrival = () => {
           >
             <i className="ri-arrow-right-s-line"></i>
           </button>
-        </div> */}
+        </div>
       </div>
 
       {/* Scroll Container — exactly 2 cards visible */}

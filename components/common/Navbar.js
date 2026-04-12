@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getCart } from "@/utils/cart";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { getWishlist } from "@/utils/wishlist";
 
 const categories = [
   { name: "Dresses", href: "/category/dresses" },
@@ -30,10 +31,22 @@ const helpLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [wishCount, setWishCount] = useState(0);
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const updateWish = () => {
+      const wish = getWishlist();
+      setWishCount(wish.length);
+    };
+
+    updateWish();
+    window.addEventListener("storage", updateWish);
+    return () => window.removeEventListener("storage", updateWish);
+  }, [])
 
   useEffect(() => {
     const updateCart = () => {
@@ -89,13 +102,20 @@ export default function Navbar() {
           onClick={() => setShowSearch(!showSearch)}
         ></i>
         <Link href="/wishlist">
+          <div className="relative">
           <i className="ri-heart-line cursor-pointer"></i>
+          {wishCount > 0 && (
+              <span className="absolute -top-0.5 -right-1 bg-red-500 text-white text-xs px-1 rounded-full">
+                {wishCount}
+              </span>
+            )}
+            </div>
         </Link>
         <Link href="/cart">
           <div className="relative">
             <i className="ri-shopping-bag-line cursor-pointer"></i>
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">
+              <span className="absolute -top-0.5 -right-1 bg-red-500 text-white text-xs px-1 rounded-full">
                 {cartCount}
               </span>
             )}

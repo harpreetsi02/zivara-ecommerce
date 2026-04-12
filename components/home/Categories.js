@@ -21,7 +21,7 @@ const Categories = () => {
     <section className="px-4 py-6">
 
       {/* Heading */}
-      <h2 className={`${lemonMilk.className} flex items-center justify-center text-lg text-black font-semibold mb-4`}>
+      <h2 className={`${lemonMilk.className} flex items-center tracking-widest justify-center text-lg text-black font-semibold mb-4`}>
         <span className="text-4xl">C</span>ATEGORIES
       </h2>
 

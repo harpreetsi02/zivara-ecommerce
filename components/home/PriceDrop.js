@@ -4,7 +4,7 @@ import Link from "next/link";
 const PriceDrop = () => {
   return (
     <Link href="/price-drop">
-      <section className="px-4 py-5 cursor-pointer">
+      <section className="px-4 py-10 cursor-pointer">
 
         {/* Heading */}
         <h2 className={`${lemonMilk.className} flex items-center justify-center text-black text-lg font-bold mb-6`}>
