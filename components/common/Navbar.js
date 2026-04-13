@@ -6,14 +6,19 @@ import { getCart } from "@/utils/cart";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getWishlist } from "@/utils/wishlist";
+import 'remixicon/fonts/remixicon.css'
 
 const categories = [
   { name: "Dresses", href: "/category/dresses" },
-  { name: "Top", href: "/category/tops" },
+  { name: "Tops", href: "/category/tops" },
   { name: "Bottom", href: "/category/bottom" },
   { name: "Jewellery", href: "/category/jewellery" },
   { name: "Bags", href: "/category/bags" },
   { name: "Jacket", href: "/category/jacket" },
+  { name: "Jeans", href: "/category/jeans" },
+  { name: "Sneakers", href: "/category/sneakers" },
+  { name: "Kurta", href: "/category/kurta" },
+  { name: "Saree", href: "/category/saree" },
 ];
 
 const accountLinks = [
@@ -34,6 +39,7 @@ export default function Navbar() {
   const [wishCount, setWishCount] = useState(0);
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const router = useRouter();
 
