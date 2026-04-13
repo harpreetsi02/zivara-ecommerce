@@ -13,7 +13,7 @@ export default function CategoryPage() {
   );
 
   return (
-    <div className="p-4 text-gray-600 mt-16">
+    <div className="p-4 text-gray-600 z-20 mt-16">
 
       <h1 className={`${lemonMilk.className} text-black text-center text-xl font-semibold capitalize mb-4`}>
         {slug}

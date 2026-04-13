@@ -19,9 +19,9 @@ export default function SearchComponent() {
   });
 
   return (
-    <div className="p-4 mt-16">
+    <div className="p-4 z-20 mt-16">
 
-      <h1 className="text-xl font-semibold mb-1">
+      <h1 className="text-xl text-black font-semibold mb-1">
         Results for &quot;{raw.trim()}&quot;
       </h1>
 
@@ -48,7 +48,7 @@ export default function SearchComponent() {
                   alt={item.name}
                   className="w-full h-48 object-cover rounded-xl"
                 />
-                <h2 className="text-sm font-medium mt-2">{item.name}</h2>
+                <h2 className="text-sm text-gray-800 font-medium mt-2">{item.name}</h2>
                 <p className="text-sm text-gray-600">₹{item.price}</p>
               </div>
             </Link>

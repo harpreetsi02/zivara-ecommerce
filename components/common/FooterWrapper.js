@@ -11,6 +11,7 @@ export default function FooterWrapper() {
     pathname.startsWith("/profile") ||
     pathname.startsWith("/orders") ||
     pathname.startsWith("/cart") ||
+    pathname.startsWith("/product") ||
     pathname.startsWith("/help");
 
   if (hideFooter) return null;

@@ -28,10 +28,10 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="mt-16 min-h-screen text-gray-600 bg-white">
+    <div className="mt-16 min-h-screen z-20 text-gray-600">
 
       {/* Header */}
-      <div className="text-center py-4 border-b pb-10 border-gray-100">
+      <div className="text-center py-4 border-b pb-5 border-gray-100">
         <h1 className={`${lemonMilk.className} text-base flex items-center justify-center font-bold tracking-widest uppercase`}><span className="text-4xl">w</span>ishlist</h1>
         <p className="text-xs text-gray-500 mt-0.5">{list.length} Items</p>
       </div>

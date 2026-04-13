@@ -79,7 +79,7 @@ export default function CartPage() {
   const total = Math.round(selectedItems.reduce((acc, item) => acc + item.price * item.qty, 0) + deliveryFee);
 
   return (
-    <div className="mt-16 min-h-screen text-gray-600 bg-gray-50">
+    <div className="mt-16 min-h-screen z-20 text-gray-600">
 
       {/* ADDRESS */}
       {isLoggedIn ? (
