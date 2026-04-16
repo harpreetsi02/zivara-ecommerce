@@ -81,7 +81,7 @@ const HeroGrid = () => {
 
       {/* Bottom */}
       <div className="h-1/5 flex flex-col py-2 items-center justify-center bg-black text-center w-full">
-        <h2 className={`${lemonMilk.className} uppercase text-lg tracking-widest`}>
+        <h2 className={`${lemonMilk.className} uppercase flex items-center text-lg tracking-widest`}>
           <span className="text-4xl">f</span>ree shipping
         </h2>
         <h4 className="font-medium text-sm tracking-wide">

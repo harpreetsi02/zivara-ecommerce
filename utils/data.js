@@ -1,6 +1,18 @@
 export const products = [
   // ───── DRESSES (25) ─────
-  { id: 1,  name: "Floral Wrap Midi Dress", price: 1299, category: "dresses", image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500" },
+  { 
+    id: 1,  
+    name: "Floral Wrap Midi Dress", 
+    price: 1299, 
+    category: "dresses", 
+    image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500",
+    images: [
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800",
+      "https://images.unsplash.com/photo-1502716119720-f3738b993f8e?w=800",
+      "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800",
+    ]
+  },
+
   { id: 2,  name: "Black Bodycon Mini Dress", price: 999, category: "dresses", image: "https://images.unsplash.com/photo-1502716119720-f3738b993f8e?w=500" },
   { id: 3,  name: "Pastel Puff Sleeve Dress", price: 1499, category: "dresses", image: "https://images.unsplash.com/photo-1568252542512-9fe8fe9c9b1d?w=500" },
   { id: 4,  name: "Emerald Satin Slip Dress", price: 1799, category: "dresses", image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=500" },

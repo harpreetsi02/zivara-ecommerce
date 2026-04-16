@@ -45,7 +45,7 @@ export default function ShopNow() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-4">
+      <div className="flex gap-2 border-b border-gray-300 overflow-x-auto no-scrollbar px-4 pb-2">
         {categories.map((cat) => (
           <button
             key={cat}
@@ -62,7 +62,7 @@ export default function ShopNow() {
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-2 gap-3 px-4">
+      <div className="grid grid-cols-2 gap-3 py-3 px-4">
         {filtered.map((item) => (
           <Link key={item.id} href={`/product/${item.id}`}>
             <div className="cursor-pointer">
