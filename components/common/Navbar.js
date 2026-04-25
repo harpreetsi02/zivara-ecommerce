@@ -2,30 +2,12 @@
 
 import { lemonMilk } from "@/app/fonts";
 import { useState, useEffect } from "react";
-import { getCart } from "@/utils/cart";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { getWishlist } from "@/utils/wishlist";
 import 'remixicon/fonts/remixicon.css'
-
-const categories = [
-  { name: "Dresses", href: "/category/dresses" },
-  { name: "Tops", href: "/category/tops" },
-  { name: "Bottom", href: "/category/bottom" },
-  { name: "Jewellery", href: "/category/jewellery" },
-  { name: "Bags", href: "/category/bags" },
-  { name: "Jacket", href: "/category/jacket" },
-  { name: "Jeans", href: "/category/jeans" },
-  { name: "Sneakers", href: "/category/sneakers" },
-  { name: "Kurta", href: "/category/kurta" },
-  { name: "Saree", href: "/category/saree" },
-];
-
-const accountLinks = [
-  { name: "My Orders", href: "/orders" },
-  { name: "Profile", href: "/profile" },
-  { name: "Settings", href: "/settings" },
-];
+import { useAuth } from "@/context/AuthContext";
+import { cartAPI, wishlistAPI } from "@/utils/api";
+import { categoryData } from "@/utils/categories";
 
 const helpLinks = [
   { name: "Customer Service", href: "/help/customer-service" },
@@ -40,29 +22,36 @@ export default function Navbar() {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { user, logout } = useAuth();
+  const [openCategory, setOpenCategory] = useState(null);
 
   const router = useRouter();
 
-  useEffect(() => {
-    const updateWish = () => {
-      const wish = getWishlist();
-      setWishCount(wish.length);
-    };
-
-    updateWish();
-    window.addEventListener("storage", updateWish);
-    return () => window.removeEventListener("storage", updateWish);
-  }, [])
+  const accountLinks = user 
+  ? [
+      { name: "My Orders", href: "/orders" },
+      { name: "Profile", href: "/profile" },
+      { name: "Settings", href: "/settings" },
+    ] : [
+    { name: "Login / Register", href: "/login"},
+  ];
 
   useEffect(() => {
-    const updateCart = () => {
-      const cart = getCart();
-      setCartCount(cart.length);
-    };
-    updateCart();
-    window.addEventListener("storage", updateCart);
-    return () => window.removeEventListener("storage", updateCart);
-  }, []);
+    setMounted(true);
+    if (user) updateCounts();
+  }, [user]);
+
+  const updateCounts = async () => {
+    try {
+      const cart = await cartAPI.getCart();
+      setCartCount(cart.totalItems || 0);
+      const wish = await wishlistAPI.getWishlist();
+      setWishCount(wish.length || 0);
+    } catch (err) {
+      setCartCount(0);
+      setWishCount(0);
+    }
+  };
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
@@ -157,7 +146,7 @@ export default function Navbar() {
           {/* Sidebar panel */}
           <div className="absolute left-0 top-0 w-[85%] h-full bg-white p-5 overflow-y-auto">
 
-            <div className="flex items-center justify-between pb-5">
+            <div className="flex items-center flex-row-reverse justify-between pr-5 pb-5">
               {/* Logo */}
               <div className="relative inline-block" onClick={() => handleNavClick("/")}>
                 <img className="rotate-20 w-20 translate-x-7" src="/images/lips.png" />
@@ -176,18 +165,44 @@ export default function Navbar() {
             </div>
 
             <div className="space-y-6">
-
               {/* Categories */}
               <div>
-                <h2 className="text-xl font-semibold">Categories</h2>
-                <ul className="mt-3 space-y-2 text-gray-600">
-                  {categories.map((item) => (
-                    <li
-                      key={item.href}
-                      className="cursor-pointer hover:text-black transition-colors"
-                      onClick={() => handleNavClick(item.href)}
-                    >
-                      {item.name}
+                <h2 className="text-xl font-semibold text-black">Categories</h2>
+                <ul className="mt-3 space-y-1">
+                  {categoryData.map((cat) => (
+                    <li key={cat.slug}>
+                    
+                      {/* Category header */}
+                      <button
+                        onClick={() => setOpenCategory(openCategory === cat.slug ? null : cat.slug)}
+                        className="w-full flex items-center justify-between py-2 text-gray-700 hover:text-black transition-colors"
+                      >
+                        <span className="text-sm font-medium">{cat.name}</span>
+                        <i className={`ri-arrow-${openCategory === cat.slug ? "up" : "down"}-s-line text-gray-400 text-sm`}></i>
+                      </button>
+                  
+                      {/* Subcategories */}
+                      {openCategory === cat.slug && (
+                        <ul className="pl-3 pb-2 space-y-1 border-l border-gray-100 ml-2">
+                          {/* All category */}
+                          <li
+                            className="text-xs text-gray-500 py-1 cursor-pointer hover:text-black transition-colors"
+                            onClick={() => handleNavClick(`/category/${cat.slug}`)}
+                          >
+                            All {cat.name}
+                          </li>
+                          {cat.subcategories.map((sub) => (
+                            <li
+                              key={sub.slug}
+                              className="text-xs text-gray-500 py-1 cursor-pointer hover:text-black transition-colors"
+                              onClick={() => handleNavClick(`/category/${cat.slug}?subcategory=${sub.slug}`)}
+                            >
+                              {sub.name}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
                     </li>
                   ))}
                 </ul>
@@ -224,6 +239,15 @@ export default function Navbar() {
                   ))}
                 </ul>
               </div>
+
+              {user && (
+                <button
+                  onClick={() => { logout(); setMenuOpen(false); }}
+                  className="w-full text-left text-red-500 text-sm font-medium mt-2"
+                >
+                  Log Out
+                </button>
+              )}
             </div>
             {/* BOTTOM RIGHT — Only lips */}
               <div className="flex mt-6">

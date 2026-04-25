@@ -1,53 +1,64 @@
 "use client";
 
 import { lemonMilk } from "@/app/fonts";
-import { products } from "@/utils/data";
+import { useEffect, useRef, useState } from "react";
+import { productAPI } from "@/utils/api";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
-
-const trending = products.slice(50, 58);
-const total = trending.length;
 
 export default function Trending() {
+  const [products, setProducts] = useState([]);
   const [current, setCurrent] = useState(0);
   const timerRef = useRef(null);
+
+  useEffect(() => {
+    fetchTrending();
+  }, []);
+
+  useEffect(() => {
+    if (products.length === 0) return;
+    startTimer();
+    return () => clearInterval(timerRef.current);
+  }, [products]);
+
+  const fetchTrending = async () => {
+    try {
+      // Random category se 8 products lo
+      const data = await productAPI.getByCategory("dresses");
+      setProducts(data.slice(0, 8));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const startTimer = () => {
     clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % total);
+      setCurrent((prev) => (prev + 1) % products.length);
     }, 3000);
   };
 
-  useEffect(() => {
-    startTimer();
-    return () => clearInterval(timerRef.current);
-  }, []);
-
   const goTo = (index) => {
-    setCurrent((index + total) % total);
+    setCurrent((index + products.length) % products.length);
     startTimer();
   };
 
-  // Circular position — angle calculate karo
   const getCardStyle = (index) => {
-    const diff = ((index - current) % total + total) % total;
-    
+    const diff = ((index - current) % products.length + products.length) % products.length;
     const positions = {
-      0: { x: 0,      y: 0,   scale: 1.12, opacity: 1,    z: 30, blur: false },
-      1: { x: 170,    y: 0,  scale: 0.88, opacity: 0.55, z: 20, blur: true  },
-      2: { x: 220,    y: 15,  scale: 0.7,  opacity: 0.2,  z: 10, blur: true  },
-      [total-1]: { x: -170, y: 0,  scale: 0.88, opacity: 0.55, z: 20, blur: true  },
-      [total-2]: { x: -220, y: 15,  scale: 0.7,  opacity: 0.2,  z: 10, blur: true  },
+      0: { x: 0, y: 0, scale: 1.12, opacity: 1, z: 30, blur: false },
+      1: { x: 115, y: 30, scale: 0.88, opacity: 0.55, z: 20, blur: true },
+      2: { x: 195, y: 65, scale: 0.7, opacity: 0.2, z: 10, blur: true },
+      [products.length - 1]: { x: -115, y: 30, scale: 0.88, opacity: 0.55, z: 20, blur: true },
+      [products.length - 2]: { x: -195, y: 65, scale: 0.7, opacity: 0.2, z: 10, blur: true },
     };
-
     return positions[diff] || { x: 0, y: 100, scale: 0.5, opacity: 0, z: 0, blur: true };
   };
 
-  return (
-    <section className="py-10 text-center overflow-hidden">
+  if (products.length === 0) return null;
 
-      {/* Heading */}
+  return (
+    <section className="py-10 bg-gray-100 text-center overflow-hidden">
+
       <h2 className={`${lemonMilk.className} text-2xl text-black uppercase font-light tracking-wide`}>
         trending
       </h2>
@@ -55,16 +66,15 @@ export default function Trending() {
         NOW
       </h1>
 
-      {/* Circular Carousel */}
       <div className="relative flex justify-center items-center h-70">
-        {trending.map((item, index) => {
+        {products.map((item, index) => {
           const { x, y, scale, opacity, z, blur } = getCardStyle(index);
-          const isCenter = ((index - current + total) % total) === 0;
+          const isCenter = ((index - current + products.length) % products.length) === 0;
 
           return (
             <div
               key={item.id}
-              onClick={() => isCenter ? null : goTo(index)}
+              onClick={() => !isCenter && goTo(index)}
               style={{
                 position: "absolute",
                 transform: `translateX(${x}px) translateY(${y}px) scale(${scale})`,
@@ -82,7 +92,7 @@ export default function Trending() {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-40 h-60 object-cover rounded-2xl shadow-md"
+                  className="w-31.25 h-46.25 object-cover rounded-2xl"
                 />
               </Link>
             </div>
@@ -90,16 +100,14 @@ export default function Trending() {
         })}
       </div>
 
-      {/* Center item name */}
       <div className="h-8 mt-2">
-        <p className="text-black text-sm italic font-medium transition-all duration-300">
-          {trending[current].name}
+        <p className="text-black text-sm italic font-medium">
+          {products[current]?.name}
         </p>
       </div>
 
-      {/* Dots */}
       <div className="flex justify-center gap-2 mt-4">
-        {trending.map((_, i) => (
+        {products.map((_, i) => (
           <button
             key={i}
             onClick={() => goTo(i)}

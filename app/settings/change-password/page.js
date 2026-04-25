@@ -2,15 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { userAPI } from "@/utils/api";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ChangePasswordPage() {
   const router = useRouter();
+  const { user } = useAuth();
   const [form, setForm] = useState({ current: "", newPass: "", confirm: "" });
   const [show, setShow] = useState({ current: false, newPass: false, confirm: false });
   const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form.current || !form.newPass || !form.confirm) {
       setError("Please fill all fields"); return;
     }
@@ -20,9 +24,23 @@ export default function ChangePasswordPage() {
     if (form.newPass !== form.confirm) {
       setError("Passwords do not match"); return;
     }
+
+    setLoading(true);
     setError("");
-    setDone(true);
+    try {
+      await userAPI.changePassword({
+        currentPassword: form.current,
+        newPassword: form.newPass,
+      });
+      setDone(true);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (!user) { router.push("/login"); return null; }
 
   if (done) return (
     <div className="mt-16 min-h-screen bg-white flex flex-col items-center justify-center px-8 text-center">
@@ -31,14 +49,17 @@ export default function ChangePasswordPage() {
       </div>
       <h2 className="text-lg font-semibold">Password Updated!</h2>
       <p className="text-sm text-gray-400 mt-2">Your password has been changed successfully.</p>
-      <button onClick={() => router.push("/settings")} className="mt-6 w-full py-3.5 bg-black text-white rounded-2xl text-sm font-semibold">
+      <button
+        onClick={() => router.push("/settings")}
+        className="mt-6 w-full py-3.5 bg-black text-white rounded-2xl text-sm font-semibold"
+      >
         Back to Settings
       </button>
     </div>
   );
 
   return (
-    <div className="mt-16 text-black min-h-screen bg-white">
+    <div className="mt-16 min-h-screen bg-white">
 
       <div className="px-4 py-5 border-b border-gray-100">
         <div className="flex items-center gap-3">
@@ -51,7 +72,6 @@ export default function ChangePasswordPage() {
       </div>
 
       <div className="px-4 py-6 space-y-4">
-
         {[
           { key: "current", label: "Current Password" },
           { key: "newPass", label: "New Password" },
@@ -65,7 +85,7 @@ export default function ChangePasswordPage() {
                 value={form[key]}
                 onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))}
                 placeholder={`Enter ${label.toLowerCase()}`}
-                className="flex-1 text-sm outline-none"
+                className="flex-1 text-sm outline-none bg-transparent"
               />
               <i
                 className={`${show[key] ? "ri-eye-off-line" : "ri-eye-line"} text-gray-400 cursor-pointer`}
@@ -75,7 +95,7 @@ export default function ChangePasswordPage() {
           </div>
         ))}
 
-        {/* Password strength hint */}
+        {/* Strength checker */}
         <div className="bg-gray-50 rounded-xl px-4 py-3 space-y-1">
           {[
             { label: "At least 8 characters", ok: form.newPass.length >= 8 },
@@ -84,15 +104,27 @@ export default function ChangePasswordPage() {
           ].map((rule) => (
             <div key={rule.label} className="flex items-center gap-2">
               <i className={`${rule.ok ? "ri-checkbox-circle-fill text-green-500" : "ri-checkbox-blank-circle-line text-gray-300"} text-sm`}></i>
-              <p className={`text-xs ${rule.ok ? "text-green-600" : "text-gray-400"}`}>{rule.label}</p>
+              <p className={`text-xs ${rule.ok ? "text-green-600" : "text-gray-400"}`}>
+                {rule.label}
+              </p>
             </div>
           ))}
         </div>
 
-        {error && <p className="text-xs text-red-500">{error}</p>}
+        {error && (
+          <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+            <p className="text-xs text-red-500">{error}</p>
+          </div>
+        )}
 
-        <button onClick={handleSubmit} className="w-full py-3.5 bg-black text-white rounded-2xl text-sm font-semibold mt-2">
-          Update Password
+        <button
+          onClick={handleSubmit}
+          disabled={loading}
+          className={`w-full py-3.5 rounded-2xl text-sm font-semibold text-white mt-2 ${
+            loading ? "bg-gray-300" : "bg-black"
+          }`}
+        >
+          {loading ? "Updating..." : "Update Password"}
         </button>
 
       </div>

@@ -18,8 +18,8 @@ const HeroGrid = () => {
     },
     {
       img: "https://images.unsplash.com/photo-1659107295515-6a0b2fb785a4?w=500",
-      slug: "dresses",
-      title: "Dresses",
+      slug: "bags",
+      title: "bags",
       big: true,
     },
     {
