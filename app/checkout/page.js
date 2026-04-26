@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { cartAPI, orderAPI } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { lemonMilk } from "../fonts";
 
 export default function CheckoutPage() {
   const { user } = useAuth();
@@ -54,7 +55,7 @@ export default function CheckoutPage() {
     <div className="mt-16 min-h-screen bg-gray-50 pb-32">
 
       <div className="px-4 py-5 bg-white border-b border-gray-100">
-        <h1 className="text-base font-semibold">Checkout</h1>
+        <h1 className={`${lemonMilk.className} text-base text-black font-semibold`}>Checkout</h1>
         <p className="text-xs text-gray-400 mt-0.5">{cart.totalItems} items</p>
       </div>
 
@@ -62,14 +63,14 @@ export default function CheckoutPage() {
 
         {/* Order Summary */}
         <div className="bg-white rounded-2xl border border-gray-100 px-4 py-4">
-          <p className="text-xs text-gray-400 uppercase tracking-widest mb-3">Order Summary</p>
+          <p className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-3">Order Summary</p>
           {cart.items.map((item) => (
             <div key={item.id} className="flex justify-between text-sm py-1.5 border-b border-gray-50 last:border-0">
               <p className="text-gray-600 line-clamp-1 flex-1">{item.productName} x{item.quantity}</p>
-              <p className="font-medium ml-2">₹{item.subtotal}</p>
+              <p className="font-medium text-gray-600 ml-2">₹{item.subtotal}</p>
             </div>
           ))}
-          <div className="flex justify-between text-sm font-semibold mt-3 pt-2 border-t border-gray-100">
+          <div className="flex justify-between text-gray-600 text-sm font-semibold mt-3 pt-2 border-t border-gray-100">
             <p>Total</p>
             <p>₹{cart.totalAmount}</p>
           </div>
@@ -77,19 +78,19 @@ export default function CheckoutPage() {
 
         {/* Delivery Address */}
         <div className="bg-white rounded-2xl border border-gray-100 px-4 py-4">
-          <p className="text-xs text-gray-400 uppercase tracking-widest mb-3">Delivery Address</p>
+          <p className="text-sm text-gray-800 font-bold uppercase tracking-wide mb-3">Delivery Address</p>
           <textarea
             value={form.address}
             onChange={(e) => setForm((p) => ({ ...p, address: e.target.value }))}
             placeholder="Enter your full delivery address..."
             rows={3}
-            className="w-full text-sm border border-gray-200 rounded-xl px-3 py-2 outline-none resize-none"
+            className="w-full text-sm border text-gray-600 placeholder:text-gray-400 border-gray-200 rounded-xl px-3 py-2 outline-none resize-none"
           />
         </div>
 
         {/* Payment Method */}
         <div className="bg-white rounded-2xl border border-gray-100 px-4 py-4">
-          <p className="text-xs text-gray-400 uppercase tracking-widest mb-3">Payment Method</p>
+          <p className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-3">Payment Method</p>
           <div className="space-y-2">
             {[
               { key: "COD", label: "Cash on Delivery", icon: "ri-money-rupee-circle-line" },

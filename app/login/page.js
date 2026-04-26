@@ -14,12 +14,10 @@ export default function LoginPage() {
   const [step, setStep] = useState(1); // 1=form, 2=otp
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
 
   const [form, setForm] = useState({
     name: "",
-    phone: "",
     email: "",
     password: "",
   });
@@ -29,13 +27,17 @@ export default function LoginPage() {
 
   // Step 1 — Send OTP
   const handleSendOtp = async () => {
-    if (!form.phone) { setError("Please enter phone number"); return; }
+    if (!form.name || !form.email || !form.password) {
+      setError("Please fill all fields"); return;
+    }
+    if (form.password.length < 8) {
+      setError("Password must be at least 8 characters"); return;
+    }
     setError("");
     setLoading(true);
     try {
-      await otpAPI.sendOtp(form.phone);
+      await otpAPI.sendOtp(form.email);
       setStep(2);
-      setOtpSent(true);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -45,14 +47,14 @@ export default function LoginPage() {
 
   // Step 2 — Verify OTP then Register
   const handleVerifyAndRegister = async () => {
-    if (!otp || otp.length !== 6) { setError("Enter 6 digit OTP"); return; }
+    if (!otp || otp.length !== 6) {
+      setError("Enter 6 digit OTP"); return;
+    }
     setError("");
     setLoading(true);
     try {
-      // Pehle OTP verify karo
-      await otpAPI.verifyOtp(form.phone, otp);
-      // Phir register karo
-      await register(form.name, form.email, form.password, form.phone);
+      await otpAPI.verifyOtp(form.email, otp);
+      await register(form.name, form.email, form.password);
       router.push("/");
     } catch (err) {
       setError(err.message);
@@ -63,6 +65,9 @@ export default function LoginPage() {
 
   // Login
   const handleLogin = async () => {
+    if (!form.email || !form.password) {
+      setError("Please fill all fields"); return;
+    }
     setError("");
     setLoading(true);
     try {
@@ -80,21 +85,21 @@ export default function LoginPage() {
 
       {/* Header */}
       <div className="text-center py-8 border-b border-gray-100">
-        <h1 className={`${lemonMilk.className} text-2xl`}>
+        <h1 className={`${lemonMilk.className} text-xl flex items-center justify-center text-black`}>
           <span className="text-4xl">Z</span>ivara
         </h1>
         <p className="text-xs text-gray-400 mt-1">
-          {isLogin ? "Welcome back!" : step === 1 ? "Create your account" : "Verify your number"}
+          {isLogin ? "Welcome back!" : step === 1 ? "Create your account" : "Verify your email"}
         </p>
       </div>
 
       <div className="px-6 py-8 flex-1">
 
-        {/* Toggle — sirf login/register pe */}
-        {step === 1 && (
+        {/* Toggle */}
+        {(isLogin || step === 1) && (
           <div className="flex bg-gray-100 rounded-2xl p-1 mb-6">
             <button
-              onClick={() => { setIsLogin(true); setError(""); }}
+              onClick={() => { setIsLogin(true); setError(""); setStep(1); }}
               className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 isLogin ? "bg-white text-black shadow-sm" : "text-gray-400"
               }`}
@@ -102,7 +107,7 @@ export default function LoginPage() {
               Login
             </button>
             <button
-              onClick={() => { setIsLogin(false); setError(""); }}
+              onClick={() => { setIsLogin(false); setError(""); setStep(1); }}
               className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 !isLogin ? "bg-white text-black shadow-sm" : "text-gray-400"
               }`}
@@ -112,7 +117,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* LOGIN FORM */}
+        {/* LOGIN */}
         {isLogin && (
           <div className="space-y-4">
             <div>
@@ -122,7 +127,7 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={(e) => handleChange("email", e.target.value)}
                 placeholder="Enter your email"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
+                className="w-full border placeholder:text-gray-400 text-gray-500 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
               />
             </div>
             <div>
@@ -132,7 +137,8 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={(e) => handleChange("password", e.target.value)}
                 placeholder="Enter your password"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
+                className="w-full border placeholder:text-gray-400 text-gray-500 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
+                onKeyDown={(e) => e.key === "Enter" && handleLogin()}
               />
             </div>
             {error && (
@@ -152,7 +158,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* REGISTER — STEP 1 */}
+        {/* REGISTER STEP 1 */}
         {!isLogin && step === 1 && (
           <div className="space-y-4">
             <div>
@@ -161,7 +167,7 @@ export default function LoginPage() {
                 value={form.name}
                 onChange={(e) => handleChange("name", e.target.value)}
                 placeholder="Enter your name"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
+                className="w-full border placeholder:text-gray-400 text-gray-500 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
               />
             </div>
             <div>
@@ -171,7 +177,7 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={(e) => handleChange("email", e.target.value)}
                 placeholder="Enter your email"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
+                className="w-full border placeholder:text-gray-400 text-gray-500 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
               />
             </div>
             <div>
@@ -181,24 +187,8 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={(e) => handleChange("password", e.target.value)}
                 placeholder="Min 8 characters"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
+                className="w-full border placeholder:text-gray-400 text-gray-500 border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
               />
-            </div>
-            <div>
-              <p className="text-xs text-gray-400 mb-1.5">Mobile Number</p>
-              <div className="flex gap-2">
-                <div className="bg-gray-100 border border-gray-200 rounded-xl px-3 flex items-center">
-                  <span className="text-sm text-gray-600">🇮🇳 +91</span>
-                </div>
-                <input
-                  type="tel"
-                  value={form.phone.replace("+91", "")}
-                  onChange={(e) => handleChange("phone", `+91${e.target.value}`)}
-                  placeholder="10 digit number"
-                  maxLength={10}
-                  className="flex-1 border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300"
-                />
-              </div>
             </div>
             {error && (
               <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3">
@@ -212,33 +202,31 @@ export default function LoginPage() {
                 loading ? "bg-gray-300" : "bg-black"
               }`}
             >
-              {loading ? "Sending OTP..." : "Send OTP"}
+              {loading ? "Sending OTP..." : "Send OTP to Email"}
             </button>
           </div>
         )}
 
-        {/* REGISTER — STEP 2 OTP */}
+        {/* REGISTER STEP 2 — OTP */}
         {!isLogin && step === 2 && (
           <div className="space-y-4">
 
-            {/* Info */}
-            <div className="bg-green-50 border border-green-100 rounded-2xl px-4 py-4 text-center">
-              <i className="ri-message-line text-green-500 text-2xl mb-2 block"></i>
-              <p className="text-sm font-medium text-green-700">OTP Sent!</p>
-              <p className="text-xs text-green-500 mt-1">
-                We sent a 6-digit code to {form.phone}
+            <div className="bg-blue-50 border border-blue-100 rounded-2xl px-4 py-4 text-center">
+              <i className="ri-mail-send-line text-blue-500 text-2xl mb-2 block"></i>
+              <p className="text-sm font-medium text-blue-700">Check your email!</p>
+              <p className="text-xs text-blue-400 mt-1">
+                OTP sent to <span className="font-semibold">{form.email}</span>
               </p>
             </div>
 
-            {/* OTP Input */}
             <div>
-              <p className="text-xs text-gray-400 mb-1.5">Enter OTP</p>
+              <p className="text-xs text-gray-400 mb-1.5">Enter 6-digit OTP</p>
               <input
                 type="number"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.slice(0, 6))}
-                placeholder="6 digit OTP"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-pink-300 text-center tracking-widest font-semibold"
+                placeholder="• • • • • •"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-center tracking-widest text-xl font-semibold outline-none focus:border-pink-300"
               />
             </div>
 
@@ -258,20 +246,19 @@ export default function LoginPage() {
               {loading ? "Verifying..." : "Verify & Create Account"}
             </button>
 
-            {/* Resend */}
             <button
               onClick={handleSendOtp}
+              disabled={loading}
               className="w-full py-2 text-xs text-gray-400 underline"
             >
               Resend OTP
             </button>
 
-            {/* Back */}
             <button
               onClick={() => { setStep(1); setOtp(""); setError(""); }}
-              className="w-full py-2 text-xs text-gray-400"
+              className="w-full py-2 text-xs text-gray-500"
             >
-              ← Change number
+              ← Change email
             </button>
 
           </div>

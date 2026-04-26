@@ -168,7 +168,7 @@ export default function Navbar() {
               {/* Categories */}
               <div>
                 <h2 className="text-xl font-semibold text-black">Categories</h2>
-                <ul className="mt-3 space-y-1">
+                <ul className="mt-1 mx-2 space-y-0.5">
                   {categoryData.map((cat) => (
                     <li key={cat.slug}>
                     
@@ -183,7 +183,7 @@ export default function Navbar() {
                   
                       {/* Subcategories */}
                       {openCategory === cat.slug && (
-                        <ul className="pl-3 pb-2 space-y-1 border-l border-gray-100 ml-2">
+                        <ul className="pl-3 pb-2 space-y-1 bg-gray-50 rounded-r-xl border-l border-gray-100 ml-2">
                           {/* All category */}
                           <li
                             className="text-xs text-gray-500 py-1 cursor-pointer hover:text-black transition-colors"

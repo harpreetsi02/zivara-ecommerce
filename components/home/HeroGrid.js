@@ -51,7 +51,7 @@ const HeroGrid = () => {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-3 grid-rows-3 gap-2 px-4 py-2 h-4/5 w-full">
+      <div className="grid grid-cols-3 grid-rows-3 gap-1.5 px-4 py-2 h-4/5 w-full">
         {items.map((item, index) => (
           <Link
             key={index}
@@ -59,7 +59,7 @@ const HeroGrid = () => {
             className={`${item.big ? "row-span-2" : ""}`}
           >
             {/* Wrapper */}
-            <div className="relative w-full h-full overflow-hidden rounded-xl">
+            <div className="relative border-amber-500/30 border-2 w-full h-full overflow-hidden rounded-xl">
               
               {/* Image */}
               <img

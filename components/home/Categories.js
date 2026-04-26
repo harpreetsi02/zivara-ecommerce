@@ -61,13 +61,13 @@ export default function Categories() {
         <div className="grid grid-cols-3 grid-rows-4 gap-3">
           {categories.map((item) => (
             <Link key={item.slug} href={`/category/${item.slug}`}>
-              <div className="cursor-pointer">
+              <div className="cursor-pointer flex flex-col items-center">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-24 rounded-lg object-cover"
+                  className="w-full h-40 rounded-lg object-cover"
                 />
-                <p className="text-xs mt-1 text-gray-800 font-medium tracking-wide capitalize">
+                <p className="text-xs mt-1 text-gray-800 border-b font-semibold tracking-wide capitalize">
                   {item.name}
                 </p>
               </div>

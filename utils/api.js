@@ -134,12 +134,12 @@ export const userAPI = {
 };
 
 export const otpAPI = {
-  sendOtp: (phone) => request("/otp/send", {
+  sendOtp: (email) => request("/otp/send", {
     method: "POST",
-    body: JSON.stringify({ phone }),
+    body: JSON.stringify({ email }),
   }),
-  verifyOtp: (phone, otp) => request("/otp/verify", {
+  verifyOtp: (email, otp) => request("/otp/verify", {
     method: "POST",
-    body: JSON.stringify({ phone, otp }),
+    body: JSON.stringify({ email, otp }),
   }),
 };

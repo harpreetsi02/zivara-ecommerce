@@ -72,7 +72,7 @@ export default function ShopNow() {
 
       {/* Heading */}
       <div className="px-4 pt-8 pb-4">
-        <h2 className={`${lemonMilk.className} text-3xl font-light text-black`}>
+        <h2 className={`${lemonMilk.className} text-3xl text-center mb-2 font-light text-black`}>
           Shop{" "}
           <span className="italic text-pink-500 drop-shadow-[0_0_10px_rgba(255,0,150,0.7)]">
             now...
@@ -117,7 +117,7 @@ export default function ShopNow() {
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-52 object-cover rounded-xl"
+                    className="w-full h-60 object-cover rounded-xl"
                   />
                   <button
                     onClick={(e) => handleWishlist(e, item)}
@@ -135,8 +135,8 @@ export default function ShopNow() {
                     </div>
                   )}
                 </div>
-                <h3 className="text-sm font-medium mt-2 line-clamp-1">{item.name}</h3>
-                <p className="text-xs text-gray-400 capitalize mt-0.5">{item.category}</p>
+                <h3 className="text-sm text-gray-800 font-semibold mt-2 line-clamp-1">{item.name}</h3>
+                <p className="text-xs text-gray-500 capitalize mt-0.5">{item.category}</p>
                 <p className="text-sm font-semibold text-black mt-1">₹{item.price}</p>
               </div>
             </Link>

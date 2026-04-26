@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { orderAPI } from "@/utils/api";
+import { lemonMilk } from "@/app/fonts";
 
 const reasons = [
   "Ordered by mistake",
@@ -37,8 +38,8 @@ export default function CancelOrderPage() {
       <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mb-4">
         <i className="ri-close-circle-fill text-red-400 text-4xl"></i>
       </div>
-      <h2 className="text-lg font-semibold">Order Cancelled</h2>
-      <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+      <h2 className="text-lg text-black font-semibold">Order Cancelled</h2>
+      <p className="text-sm text-gray-500 mt-2 leading-relaxed">
         Your order #ZV{orderId} has been successfully cancelled. Refund will be processed within 5-7 business days.
       </p>
       <button
@@ -56,11 +57,11 @@ export default function CancelOrderPage() {
       <div className="px-4 py-5 border-b border-gray-100">
         <div className="flex items-center gap-3">
           <i
-            className="ri-arrow-left-line text-xl cursor-pointer"
+            className="ri-arrow-left-line text-xl text-gray-800 cursor-pointer"
             onClick={() => step === 1 ? router.back() : setStep(step - 1)}
           ></i>
           <div>
-            <h1 className="text-base font-semibold">Cancel Order</h1>
+            <h1 className={`${lemonMilk.className} text-base text-black font-semibold`}>Cancel Order</h1>
             <p className="text-xs text-gray-400">#ZV{orderId} • Step {step} of 2</p>
           </div>
         </div>
@@ -76,14 +77,14 @@ export default function CancelOrderPage() {
 
         {step === 1 && (
           <div>
-            <h2 className="text-sm font-semibold mb-1">Why are you cancelling?</h2>
+            <h2 className="text-sm text-gray-800 font-semibold mb-1">Why are you cancelling?</h2>
             <p className="text-xs text-gray-400 mb-5">Please select a reason</p>
             <div className="space-y-2">
               {reasons.map((r) => (
                 <button
                   key={r}
                   onClick={() => setReason(r)}
-                  className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl border transition-all ${
+                  className={`w-full text-gray-500 flex items-center justify-between px-4 py-3.5 rounded-2xl border transition-all ${
                     reason === r ? "border-red-400 bg-red-50" : "border-gray-100"
                   }`}
                 >
@@ -110,7 +111,7 @@ export default function CancelOrderPage() {
 
         {step === 2 && (
           <div>
-            <h2 className="text-sm font-semibold mb-5">Confirm cancellation</h2>
+            <h2 className="text-sm text-black font-semibold mb-5">Confirm cancellation</h2>
 
             <div className="bg-red-50 border border-red-100 rounded-2xl px-4 py-4 flex gap-3 mb-4">
               <i className="ri-error-warning-line text-red-400 text-xl shrink-0 mt-0.5"></i>
@@ -122,11 +123,11 @@ export default function CancelOrderPage() {
             <div className="space-y-3">
               <div className="bg-gray-50 rounded-2xl px-4 py-4">
                 <p className="text-xs text-gray-400 mb-1">Order ID</p>
-                <p className="text-sm font-semibold">#ZV{orderId}</p>
+                <p className="text-sm text-gray-800 font-semibold">#ZV{orderId}</p>
               </div>
               <div className="bg-gray-50 rounded-2xl px-4 py-4">
                 <p className="text-xs text-gray-400 mb-1">Reason</p>
-                <p className="text-sm font-semibold">{reason}</p>
+                <p className="text-sm text-gray-800 font-semibold">{reason}</p>
               </div>
             </div>
 

@@ -59,8 +59,8 @@ export default function PriceDropPage() {
 
       {/* Header */}
       <div className="px-4 pt-6 pb-4">
-        <h1 className={`${lemonMilk.className} text-2xl font-bold text-black flex items-center`}>
-          <span className="text-4xl">P</span>RICE DROP
+        <h1 className={`${lemonMilk.className} text-xl font-bold text-black flex items-center`}>
+          <span className="text-4xl">p</span>rice drop
         </h1>
         <p className="text-sm text-gray-400 mt-1">
           {loading ? "Loading..." : `${products.length} items on sale`}
@@ -100,7 +100,7 @@ export default function PriceDropPage() {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full h-48 object-cover rounded-xl"
+                      className="w-full h-55 object-cover rounded-xl"
                     />
                     {/* Discount badge */}
                     <span className="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded-md">
@@ -119,8 +119,8 @@ export default function PriceDropPage() {
                     </button>
                   </div>
 
-                  <h2 className="text-sm font-medium mt-2 line-clamp-1">{item.name}</h2>
-                  <p className="text-xs text-gray-400 capitalize mt-0.5">{item.category}</p>
+                  <h2 className="text-sm text-gray-800 font-semibold mt-2 line-clamp-1">{item.name}</h2>
+                  <p className="text-xs text-gray-500 capitalize mt-0.5">{item.category}</p>
                   <div className="flex items-center gap-2 mt-0.5">
                     <p className="text-sm font-semibold text-black">₹{item.price}</p>
                     <p className="text-xs text-gray-400 line-through">₹{originalPrice}</p>

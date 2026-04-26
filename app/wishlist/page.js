@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { wishlistAPI, cartAPI } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { lemonMilk } from "../fonts";
 
 export default function WishlistPage() {
   const [list, setList] = useState([]);
@@ -61,7 +62,7 @@ export default function WishlistPage() {
     <div className="mt-16 min-h-screen bg-white">
 
       <div className="text-center py-4 border-b border-gray-100">
-        <h1 className="text-base font-semibold tracking-widest uppercase">Wishlist</h1>
+        <h1 className={`${lemonMilk.className} text-base flex items-center justify-center text-black font-semibold tracking-widest uppercase`}><span className="text-4xl">w</span>ishlist</h1>
         <p className="text-xs text-gray-400 mt-0.5">{list.length} Items</p>
       </div>
 
@@ -96,7 +97,7 @@ export default function WishlistPage() {
               />
 
               <div className="px-2 pt-2 pb-3">
-                <h2 className="text-xs font-medium line-clamp-2 leading-snug">
+                <h2 className="text-xs text-gray-600 font-semibold line-clamp-2 leading-snug">
                   {item.productName}
                 </h2>
                 <p className="text-xs text-gray-400 capitalize mt-0.5">

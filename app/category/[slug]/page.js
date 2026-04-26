@@ -6,6 +6,7 @@ import { productAPI, wishlistAPI } from "@/utils/api";
 import { categoryData } from "@/utils/categories";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
+import { lemonMilk } from "@/app/fonts";
 
 export default function CategoryPage() {
   const { slug } = useParams();
@@ -75,7 +76,7 @@ export default function CategoryPage() {
 
       {/* Header */}
       <div className="px-4 pt-5 pb-3 border-b border-gray-100">
-        <h1 className="text-xl font-semibold capitalize">{slug}</h1>
+        <h1 className={`${lemonMilk.className} text-xl text-black font-semibold capitalize`}>{slug}</h1>
         {activeSubName && (
           <p className="text-xs text-gray-400 mt-0.5">{activeSubName}</p>
         )}
@@ -142,7 +143,7 @@ export default function CategoryPage() {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full h-52 object-cover rounded-xl"
+                      className="w-full h-60 object-cover rounded-xl"
                     />
                     <button
                       onClick={(e) => handleWishlist(e, item.id)}
@@ -160,9 +161,9 @@ export default function CategoryPage() {
                       </div>
                     )}
                   </div>
-                  <h2 className="text-sm font-medium mt-2 line-clamp-1">{item.name}</h2>
+                  <h2 className="text-sm text-gray-800 font-semibold mt-2 line-clamp-1">{item.name}</h2>
                   {item.subcategory && (
-                    <p className="text-xs text-gray-300 mt-0.5 capitalize">{item.subcategory}</p>
+                    <p className="text-xs text-gray-400 mt-0.5 capitalize">{item.subcategory}</p>
                   )}
                   <p className="text-sm font-semibold text-black mt-0.5">₹{item.price}</p>
                 </div>

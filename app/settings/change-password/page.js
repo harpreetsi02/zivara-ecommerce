@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { userAPI } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
+import { lemonMilk } from "@/app/fonts";
 
 export default function ChangePasswordPage() {
   const router = useRouter();
@@ -63,9 +64,9 @@ export default function ChangePasswordPage() {
 
       <div className="px-4 py-5 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <i className="ri-arrow-left-line text-xl cursor-pointer" onClick={() => router.back()}></i>
+          <i className="ri-arrow-left-line text-gray-800 text-xl cursor-pointer" onClick={() => router.back()}></i>
           <div>
-            <h1 className="text-base font-semibold">Change Password</h1>
+            <h1 className={`${lemonMilk.className} text-base text-black font-semibold`}>Change Password</h1>
             <p className="text-xs text-gray-400">Keep your account secure</p>
           </div>
         </div>
@@ -78,14 +79,14 @@ export default function ChangePasswordPage() {
           { key: "confirm", label: "Confirm New Password" },
         ].map(({ key, label }) => (
           <div key={key}>
-            <p className="text-xs text-gray-400 mb-1.5">{label}</p>
+            <p className="text-xs text-gray-500 mb-1.5">{label}</p>
             <div className="flex items-center border border-gray-200 rounded-xl px-4 py-3 gap-2">
               <input
                 type={show[key] ? "text" : "password"}
                 value={form[key]}
                 onChange={(e) => setForm((p) => ({ ...p, [key]: e.target.value }))}
                 placeholder={`Enter ${label.toLowerCase()}`}
-                className="flex-1 text-sm outline-none bg-transparent"
+                className="flex-1 text-sm outline-none bg-transparent text-gray-600 placeholder:text-gray-400"
               />
               <i
                 className={`${show[key] ? "ri-eye-off-line" : "ri-eye-line"} text-gray-400 cursor-pointer`}

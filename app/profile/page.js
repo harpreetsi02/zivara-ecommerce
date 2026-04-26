@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { userAPI } from "@/utils/api";
+import { lemonMilk } from "../fonts";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -80,8 +81,8 @@ export default function ProfilePage() {
       <div className="px-4 py-5 border-b border-gray-100">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <i className="ri-arrow-left-line text-xl cursor-pointer" onClick={() => router.back()}></i>
-            <h1 className="text-base font-semibold">My Profile</h1>
+            <i className="ri-arrow-left-line text-xl text-gray-800 cursor-pointer" onClick={() => router.back()}></i>
+            <h1 className={`${lemonMilk.className} text-base text-black font-semibold`}>My Profile</h1>
           </div>
           <button
             onClick={() => edit ? handleSave() : setEdit(true)}
@@ -98,8 +99,8 @@ export default function ProfilePage() {
         <div className="w-20 h-20 rounded-full bg-pink-100 flex items-center justify-center text-3xl font-bold text-pink-400">
           {form.name.charAt(0).toUpperCase()}
         </div>
-        <p className="mt-3 text-sm font-semibold">{form.name}</p>
-        <p className="text-xs text-gray-400">{form.email}</p>
+        <p className="mt-3 text-black text-sm font-semibold">{form.name}</p>
+        <p className="text-xs text-gray-500">{form.email}</p>
       </div>
 
       {/* Success / Error */}
@@ -123,19 +124,19 @@ export default function ProfilePage() {
           { label: "Gender", key: "gender", editable: true },
           { label: "Date of Birth", key: "dob", editable: true },
         ].map(({ label, key, editable }) => (
-          <div key={key} className="border-b border-gray-100 pb-3">
+          <div key={key} className="border-b text-gray-500 border-gray-100 pb-3">
             <p className="text-xs text-gray-400 mb-1">{label}</p>
             {edit && editable ? (
               <input
                 value={form[key]}
                 onChange={(e) => handleChange(key, e.target.value)}
-                className="text-sm font-medium w-full outline-none border-b border-pink-300 pb-1 bg-transparent"
+                className="text-sm placeholder:text-gray-600 text-gray-600 font-medium w-full outline-none border-b border-pink-300 pb-1 bg-transparent"
                 placeholder={`Enter ${label.toLowerCase()}`}
               />
             ) : (
               <p className="text-sm font-medium">
                 {form[key] || (
-                  <span className="text-gray-300">Not set</span>
+                  <span className="text-gray-400">Not set</span>
                 )}
               </p>
             )}

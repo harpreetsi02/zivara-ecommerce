@@ -5,6 +5,7 @@ import { cartAPI } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { lemonMilk } from "../fonts";
 
 export default function CartPage() {
   const [cart, setCart] = useState(null);
@@ -57,7 +58,7 @@ export default function CartPage() {
   return (
     <div className="p-4 mt-16">
 
-      <h1 className="text-xl font-semibold mb-4">Your Cart</h1>
+      <h1 className={`${lemonMilk.className} text-center flex items-center justify-center text-black text-xl font-semibold mb-4`}><span className="text-4xl">y</span>our Cart</h1>
 
       {!cart || cart.items.length === 0 ? (
         <div className="text-center mt-20">
@@ -70,27 +71,27 @@ export default function CartPage() {
         <>
           <div className="space-y-4">
             {cart.items.map((item) => (
-              <div key={item.id} className="flex gap-4 items-center border-b pb-3">
+              <div key={item.id} className="flex gap-4 items-center border-b border-gray-300 pb-3">
                 <img
                   src={item.productImage}
-                  className="w-20 h-20 object-cover rounded-lg"
+                  className="w-20 h-25 object-cover rounded-lg"
                   alt={item.productName}
                 />
                 <div className="flex-1">
-                  <h2 className="text-sm font-medium line-clamp-1">{item.productName}</h2>
+                  <h2 className="text-sm text-gray-600 font-semibold line-clamp-1">{item.productName}</h2>
                   <p className="text-xs text-gray-400 mt-0.5">Size: {item.size || "Free"}</p>
-                  <p className="text-sm font-semibold mt-0.5">₹{item.productPrice}</p>
+                  <p className="text-sm text-gray-700 font-semibold mt-0.5">₹{item.productPrice}</p>
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       onClick={() => handleQty(item.id, "dec")}
-                      className="px-2 py-0.5 bg-gray-200 rounded text-sm"
+                      className="px-2 py-0.5 bg-black font-semibold rounded text-sm"
                     >
                       -
                     </button>
-                    <span className="text-sm">{item.quantity}</span>
+                    <span className="text-sm text-black">{item.quantity}</span>
                     <button
                       onClick={() => handleQty(item.id, "inc")}
-                      className="px-2 py-0.5 bg-gray-200 rounded text-sm"
+                      className="px-2 py-0.5 bg-black font-semibold rounded text-sm"
                     >
                       +
                     </button>
@@ -98,7 +99,7 @@ export default function CartPage() {
                 </div>
                 <button
                   onClick={() => handleRemove(item.id)}
-                  className="text-red-400 text-xs"
+                  className="text-red-400 font-semibold text-xs"
                 >
                   Remove
                 </button>
@@ -106,12 +107,12 @@ export default function CartPage() {
             ))}
           </div>
 
-          <div className="mt-6 border-t pt-4">
+          <div className="mt-6 border-t border-gray-300 pt-4">
             <div className="flex justify-between text-sm mb-1">
-              <p className="text-gray-500">Total Items</p>
+              <p className="text-gray-800 font-semibold">Total Items</p>
               <p>{cart.totalItems}</p>
             </div>
-            <div className="flex justify-between text-sm font-semibold">
+            <div className="flex justify-between text-gray-600 px-5 text-sm font-semibold">
               <p>Total Amount</p>
               <p>₹{cart.totalAmount}</p>
             </div>

@@ -38,11 +38,11 @@ export default function NewArrival() {
     <section className="px-4 text-black py-6">
 
       {/* Heading + Arrows */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-center mb-4">
         <h2 className={`${lemonMilk.className} flex items-center tracking-wider text-lg text-black font-semibold`}>
           <span className="text-4xl">N</span>ew Arrivals
         </h2>
-        <div className="flex gap-2">
+        <div className="hidden md:flex gap-2">
           <button
             onClick={() => scroll("left")}
             className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center"
@@ -83,7 +83,7 @@ export default function NewArrival() {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full h-50 object-cover rounded-xl"
+                      className="w-full h-70 object-cover rounded-lg"
                     />
                     {item.stock <= 5 && item.stock > 0 && (
                       <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-0.5 rounded-md">
