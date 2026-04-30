@@ -38,7 +38,7 @@ export const categoryData = [
     slug: "jewellery",
     subcategories: [
       { name: "Bracelet", slug: "bracelet" },
-      { name: "Necklace", slug: "necklace" },
+      { name: "Neckchain", slug: "neckchain" },
       { name: "Rings", slug: "rings" },
       { name: "Earrings", slug: "earrings" },
     ],
