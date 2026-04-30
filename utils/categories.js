@@ -3,6 +3,8 @@ export const categoryData = [
     name: "Dresses",
     slug: "dresses",
     subcategories: [
+      { name: "Shirt Dress", slug: "shirt-dress" },
+      { name: "T-Shirt Dress", slug: "t-shirt-dress" },
       { name: "Bodycon Dress", slug: "bodycon-dress" },
       { name: "Short Dress", slug: "short-dress" },
       { name: "Long Dress", slug: "long-dress" },
