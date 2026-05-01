@@ -1,13 +1,15 @@
 "use client";
 
 import { lemonMilk } from "@/app/fonts";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import 'remixicon/fonts/remixicon.css'
+import "remixicon/fonts/remixicon.css";
+
 import { useAuth } from "@/context/AuthContext";
 import { cartAPI, wishlistAPI } from "@/utils/api";
 import { categoryData } from "@/utils/categories";
+import { gsap } from "@/utils/gsap";
 
 const helpLinks = [
   { name: "Customer Service", href: "/help/customer-service" },
@@ -18,72 +20,185 @@ const helpLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
-  const [wishCount, setWishCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { user, logout } = useAuth();
   const [openCategory, setOpenCategory] = useState(null);
 
+  // GSAP refs
+  const navRef = useRef(null);
+  const menuIconRef = useRef(null);
+  const rightIconsRef = useRef(null);
+  const logoRef = useRef(null);
+
   const router = useRouter();
+  const { user, logout } = useAuth();
 
-  const accountLinks = user 
-  ? [
-      { name: "My Orders", href: "/orders" },
-      { name: "Profile", href: "/profile" },
-      { name: "Settings", href: "/settings" },
-    ] : [
-    { name: "Login / Register", href: "/login"},
-  ];
+  // Account links
+  const accountLinks = user
+    ? [
+        { name: "My Orders", href: "/orders" },
+        { name: "Profile", href: "/profile" },
+        { name: "Settings", href: "/settings" },
+      ]
+    : [{ name: "Login / Register", href: "/login" }];
 
+  // Mounted
   useEffect(() => {
     setMounted(true);
-    if (user) updateCounts();
+
+    if (user) {
+      updateCounts();
+    } else {
+      setCartCount(0);
+      setWishlistCount(0);
+    }
   }, [user]);
 
+  // Fetch cart/wishlist counts
   const updateCounts = async () => {
     try {
       const cart = await cartAPI.getCart();
       setCartCount(cart.totalItems || 0);
+
       const wish = await wishlistAPI.getWishlist();
-      setWishCount(wish.length || 0);
+      setWishlistCount(wish.length || 0);
     } catch (err) {
       setCartCount(0);
-      setWishCount(0);
+      setWishlistCount(0);
     }
   };
 
+  // Navbar intro animation
+  useEffect(() => {
+    if (!mounted) return;
+
+    const seen = sessionStorage.getItem("introSeen");
+    const delay = seen ? 0 : 2.8;
+
+    const tl = gsap.timeline({ delay });
+
+    gsap.set(menuIconRef.current, {
+      x: -40,
+      opacity: 0,
+    });
+
+    gsap.set(rightIconsRef.current, {
+      x: 40,
+      opacity: 0,
+    });
+
+    gsap.set(logoRef.current, {
+      opacity: 0,
+    });
+
+    tl.to(menuIconRef.current, {
+      x: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: "power3.out",
+    })
+      .to(
+        rightIconsRef.current,
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.3"
+      )
+      .to(
+        logoRef.current,
+        {
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.out",
+        },
+        "-=0.2"
+      );
+  }, [mounted]);
+
+  // Search
   const handleSearch = (e) => {
     if (e.key === "Enter") {
-      const trimmed = search.trim(); // extra spaces hata do
-      if (trimmed === "") return;    // sirf spaces thi toh kuch mat karo
-      router.push(`/search?q=${encodeURIComponent(trimmed)}`); // special chars safe
+      const trimmed = search.trim();
+
+      if (trimmed === "") return;
+
+      router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+
       setShowSearch(false);
       setSearch("");
     }
   };
 
-  // Sidebar band karo + route karo
+  // Navigation
   const handleNavClick = (href) => {
     setMenuOpen(false);
     router.push(href);
   };
 
-  return (
-    <nav className="fixed top-0 text-black left-0 z-50 w-full bg-white px-4 h-16 flex items-center shadow-sm justify-between">
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <nav className="fixed top-0 left-0 z-50 w-full bg-white px-4 h-16 flex items-center justify-between shadow-sm">
+        <i className="ri-menu-line text-2xl text-black"></i>
 
+        <Link href="/">
+          <div className="relative inline-block">
+            <img
+              className="rotate-20 w-20 translate-x-4"
+              src="/images/lips.png"
+              alt="logo"
+            />
+
+            <h1
+              className={`${lemonMilk.className} absolute inset-0 flex items-center justify-center text-lg tracking-widest uppercase text-black`}
+            >
+              <span className="text-4xl">z</span>ivara
+            </h1>
+          </div>
+        </Link>
+
+        <div className="flex items-center gap-4 text-2xl text-black">
+          <i className="ri-search-line"></i>
+          <i className="ri-heart-line"></i>
+          <i className="ri-shopping-bag-line"></i>
+        </div>
+      </nav>
+    );
+  }
+
+  return (
+    <nav
+      ref={navRef}
+      className="fixed top-0 left-0 z-50 w-full bg-white px-4 h-16 flex items-center justify-between shadow-sm"
+    >
       {/* LEFT */}
-      <i
-        className="ri-menu-line text-2xl cursor-pointer"
-        onClick={() => setMenuOpen(true)}
-      ></i>
+      <div ref={menuIconRef}>
+        <i
+          className="ri-menu-line text-2xl cursor-pointer text-black"
+          onClick={() => setMenuOpen(true)}
+        ></i>
+      </div>
 
       {/* CENTER LOGO */}
       <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-        <div className="relative inline-block">
-          <img className="rotate-20 w-20 translate-x-4" src="/images/lips.png" />
+        <div
+          id="navbar-logo"
+          ref={logoRef}
+          className="relative inline-block"
+        >
+          <img
+            className="rotate-20 w-20 translate-x-4"
+            src="/images/lips.png"
+            alt="logo"
+          />
+
           <h1
-            className={`${lemonMilk.className} absolute inset-0 flex items-center justify-center text-lg tracking-widest uppercase`}
+            className={`${lemonMilk.className} absolute inset-0 flex items-center justify-center text-lg tracking-widest uppercase text-black`}
           >
             <span className="text-4xl">z</span>ivara
           </h1>
@@ -91,26 +206,36 @@ export default function Navbar() {
       </Link>
 
       {/* RIGHT ICONS */}
-      <div className="flex items-center gap-4 text-2xl">
+      <div
+        ref={rightIconsRef}
+        className="flex items-center gap-4 text-2xl text-black"
+      >
+        {/* Search */}
         <i
           className="ri-search-line cursor-pointer"
           onClick={() => setShowSearch(!showSearch)}
         ></i>
+
+        {/* Wishlist */}
         <Link href="/wishlist">
           <div className="relative">
-          <i className="ri-heart-line cursor-pointer"></i>
-          {wishCount > 0 && (
-              <span className="absolute -top-0.5 -right-1 bg-red-500 text-white text-xs px-1 rounded-full">
-                {wishCount}
+            <i className="ri-heart-line cursor-pointer"></i>
+
+            {wishlistCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 rounded-full leading-4">
+                {wishlistCount}
               </span>
             )}
-            </div>
+          </div>
         </Link>
+
+        {/* Cart */}
         <Link href="/cart">
           <div className="relative">
             <i className="ri-shopping-bag-line cursor-pointer"></i>
+
             {cartCount > 0 && (
-              <span className="absolute -top-0.5 -right-1 bg-red-500 text-white text-xs px-1 rounded-full">
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 rounded-full leading-4">
                 {cartCount}
               </span>
             )}
@@ -120,14 +245,14 @@ export default function Navbar() {
 
       {/* SEARCH BAR */}
       {showSearch && (
-        <div className="absolute top-16 left-0 w-full bg-white px-4 py-2 shadow">
+        <div className="absolute top-16 left-0 w-full bg-white px-4 py-2 shadow z-50">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleSearch}
             placeholder="Search products..."
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border px-3 py-2 rounded text-black text-sm"
             autoFocus
           />
         </div>
@@ -136,86 +261,117 @@ export default function Navbar() {
       {/* SIDEBAR */}
       {menuOpen && (
         <div className="fixed inset-0 z-50">
-
           {/* Overlay */}
           <div
             className="absolute inset-0 bg-black/40"
             onClick={() => setMenuOpen(false)}
           ></div>
 
-          {/* Sidebar panel */}
-          <div className="absolute left-0 top-0 w-[85%] h-full bg-white p-5 overflow-y-auto">
-
-            <div className="flex items-center flex-row-reverse justify-between pr-5 pb-5">
+          {/* Sidebar */}
+          <div className="absolute left-0 top-0 w-[85%] h-full bg-white p-5 overflow-y-auto flex flex-col relative">
+            {/* TOP */}
+            <div className="flex items-center justify-between mb-6">
               {/* Logo */}
-              <div className="relative inline-block" onClick={() => handleNavClick("/")}>
-                <img className="rotate-20 w-20 translate-x-7" src="/images/lips.png" />
-                <h1 className={`${lemonMilk.className} absolute inset-0 flex items-center justify-center text-sm tracking-widest uppercase`}>
-                  <span className="text-4xl">z</span>ivara
+              <div
+                className="relative inline-block cursor-pointer"
+                onClick={() => handleNavClick("/")}
+              >
+                <img
+                  className="rotate-20 w-16 translate-x-3"
+                  src="/images/lips.png"
+                  alt="logo"
+                />
+
+                <h1
+                  className={`${lemonMilk.className} absolute inset-0 flex items-center justify-center text-sm tracking-widest uppercase text-black`}
+                >
+                  <span className="text-3xl">z</span>ivara
                 </h1>
               </div>
 
               {/* Close */}
-              <div className="flex justify-end mb-5">
-                <i
-                  className="ri-close-line text-2xl cursor-pointer"
-                  onClick={() => setMenuOpen(false)}
-                ></i>
-              </div>
+              <i
+                className="ri-close-line text-2xl cursor-pointer text-black"
+                onClick={() => setMenuOpen(false)}
+              ></i>
             </div>
 
-            <div className="space-y-6">
+            {/* CONTENT */}
+            <div className="space-y-6 flex-1">
               {/* Categories */}
               <div>
-                <h2 className="text-xl font-semibold text-black">Categories</h2>
-                <ul className="mt-1 mx-2 space-y-0.5">
+                <h2 className="text-xl font-semibold text-black">
+                  Categories
+                </h2>
+
+                <ul className="mt-2 space-y-0.5">
                   {categoryData.map((cat) => (
                     <li key={cat.slug}>
-                    
-                      {/* Category header */}
+                      {/* Category button */}
                       <button
-                        onClick={() => setOpenCategory(openCategory === cat.slug ? null : cat.slug)}
+                        onClick={() =>
+                          setOpenCategory(
+                            openCategory === cat.slug ? null : cat.slug
+                          )
+                        }
                         className="w-full flex items-center justify-between py-2 text-gray-700 hover:text-black transition-colors"
                       >
-                        <span className="text-sm font-medium">{cat.name}</span>
-                        <i className={`ri-arrow-${openCategory === cat.slug ? "up" : "down"}-s-line text-gray-400 text-sm`}></i>
+                        <span className="text-sm font-medium">
+                          {cat.name}
+                        </span>
+
+                        <i
+                          className={`ri-arrow-${
+                            openCategory === cat.slug ? "up" : "down"
+                          }-s-line text-gray-400 text-sm`}
+                        ></i>
                       </button>
-                  
+
                       {/* Subcategories */}
                       {openCategory === cat.slug && (
                         <ul className="pl-3 pb-2 space-y-1 bg-gray-50 rounded-r-xl border-l border-gray-100 ml-2">
                           {/* All category */}
                           <li
                             className="text-xs text-gray-500 py-1 cursor-pointer hover:text-black transition-colors"
-                            onClick={() => handleNavClick(`/category/${cat.slug}`)}
+                            onClick={() =>
+                              handleNavClick(`/category/${cat.slug}`)
+                            }
                           >
                             All {cat.name}
                           </li>
+
+                          {/* Subs */}
                           {cat.subcategories.map((sub) => (
                             <li
                               key={sub.slug}
                               className="text-xs text-gray-500 py-1 cursor-pointer hover:text-black transition-colors"
-                              onClick={() => handleNavClick(`/category/${cat.slug}?subcategory=${sub.slug}`)}
+                              onClick={() =>
+                                handleNavClick(
+                                  `/category/${cat.slug}?subcategory=${sub.slug}`
+                                )
+                              }
                             >
                               {sub.name}
                             </li>
                           ))}
                         </ul>
                       )}
-
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* My Account */}
+              {/* Account */}
               <div>
-                <h2 className="text-xl font-semibold">My Account</h2>
+                <h2 className="text-xl font-semibold text-black">
+                  My Account
+                </h2>
+
                 <ul className="mt-3 space-y-2 text-gray-600">
                   {accountLinks.map((item) => (
                     <li
                       key={item.href}
-                      className="cursor-pointer hover:text-black transition-colors"
+                      className="cursor-pointer hover:text-black transition-colors text-sm"
                       onClick={() => handleNavClick(item.href)}
                     >
                       {item.name}
@@ -224,14 +380,17 @@ export default function Navbar() {
                 </ul>
               </div>
 
-              {/* Help Centre */}
+              {/* Help */}
               <div>
-                <h2 className="text-xl font-semibold">Help Centre</h2>
+                <h2 className="text-xl font-semibold text-black">
+                  Help Centre
+                </h2>
+
                 <ul className="mt-3 space-y-2 text-gray-600">
                   {helpLinks.map((item) => (
                     <li
                       key={item.href}
-                      className="cursor-pointer hover:text-black transition-colors"
+                      className="cursor-pointer hover:text-black transition-colors text-sm"
                       onClick={() => handleNavClick(item.href)}
                     >
                       {item.name}
@@ -240,22 +399,26 @@ export default function Navbar() {
                 </ul>
               </div>
 
+              {/* Logout */}
               {user && (
                 <button
-                  onClick={() => { logout(); setMenuOpen(false); }}
-                  className="w-full text-left text-red-500 text-sm font-medium mt-2"
+                  onClick={() => {
+                    logout();
+                    setMenuOpen(false);
+                  }}
+                  className="w-full text-left text-red-500 text-sm font-medium"
                 >
                   Log Out
                 </button>
               )}
             </div>
-            {/* BOTTOM RIGHT — Only lips */}
-              <div className="flex mt-6">
-                <img
-                  className="-rotate-20 w-40 opacity-75 absolute bottom-10 right-5"
-                  src="/images/lips.png"
-                />
-              </div>
+
+            {/* Bottom image */}
+            <img
+              className="-rotate-20 w-40 opacity-50 absolute bottom-5 right-5"
+              src="/images/lips.png"
+              alt=""
+            />
           </div>
         </div>
       )}
