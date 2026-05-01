@@ -14,13 +14,13 @@ const items = [
     },
     {
       img: "https://images.unsplash.com/photo-1711188053977-5d45da407737?w=500",
-      slug: "tops",
-      title: "Tops",
+      slug: "topwear",
+      title: "Top Wear",
     },
     {
       img: "https://images.unsplash.com/photo-1659107295515-6a0b2fb785a4?w=500",
       slug: "bags",
-      title: "bags",
+      title: "Bags",
       big: true,
     },
     {
@@ -32,7 +32,7 @@ const items = [
     {
       img: "https://images.unsplash.com/photo-1664552455995-ac507f7dddad?w=500",
       slug: "shirts",
-      title: "shirts",
+      title: "Shirts",
     },
     {
       img: "https://plus.unsplash.com/premium_photo-1726930176874-96c2dc7c671d?w=500",
