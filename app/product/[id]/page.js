@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { productAPI, cartAPI, wishlistAPI } from "@/utils/api";
 import { useAuth } from "@/context/AuthContext";
 
@@ -20,6 +20,8 @@ export default function ProductPage() {
   const [sizeError, setSizeError] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const touchStartX = useRef(null);
+  const searchParams = useSearchParams();
+  const subcategory = searchParams.get("subcategory");
 
   useEffect(() => {
     fetchProduct();
@@ -183,7 +185,10 @@ export default function ProductPage() {
         <div className="flex items-start justify-between gap-2">
           <div>
             <h1 className="text-lg font-semibold leading-snug">{product.name}</h1>
-            <p className="text-xs text-gray-400 mt-0.5 capitalize">{product.category}</p>
+            {/* <p className="text-xs text-gray-400 mt-0.5 capitalize">{product.category}</p> */}
+            {product.subcategory && (
+              <p className="text-xs text-gray-400 mt-0.5 capitalize">{product.subcategory}</p>
+            )}
           </div>
           <button onClick={handleWishlist} className="shrink-0 mt-1">
             <i className={`${liked ? "ri-heart-fill text-red-500" : "ri-heart-line text-gray-400"} text-2xl`}></i>

@@ -86,26 +86,75 @@ export const productAPI = {
   },
 };
 
+// export const cartAPI = {
+//   getCart: () => request("/cart"),
+//   addToCart: (body) => request("/cart", {
+//     method: "POST",
+//     body: JSON.stringify(body),
+//   }),
+//   updateQuantity: (itemId, quantity) => request(`/cart/${itemId}?quantity=${quantity}`, {
+//     method: "PUT",
+//   }),
+//   removeItem: (itemId) => request(`/cart/${itemId}`, {
+//     method: "DELETE",
+//   }),
+//   clearCart: () => request("/cart", { method: "DELETE" }),
+// };
+
 export const cartAPI = {
   getCart: () => request("/cart"),
-  addToCart: (body) => request("/cart", {
-    method: "POST",
-    body: JSON.stringify(body),
-  }),
-  updateQuantity: (itemId, quantity) => request(`/cart/${itemId}?quantity=${quantity}`, {
-    method: "PUT",
-  }),
-  removeItem: (itemId) => request(`/cart/${itemId}`, {
-    method: "DELETE",
-  }),
-  clearCart: () => request("/cart", { method: "DELETE" }),
+  
+  addToCart: async (body) => {
+    const data = await request("/cart", {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    // Navbar ko batao
+    window.dispatchEvent(new Event("cart-updated"));
+    return data;
+  },
+
+  updateQuantity: async (itemId, quantity) => {
+    const data = await request(`/cart/${itemId}?quantity=${quantity}`, {
+      method: "PUT",
+    });
+    window.dispatchEvent(new Event("cart-updated"));
+    return data;
+  },
+
+  removeItem: async (itemId) => {
+    const data = await request(`/cart/${itemId}`, { method: "DELETE" });
+    window.dispatchEvent(new Event("cart-updated"));
+    return data;
+  },
+
+  clearCart: async () => {
+    const data = await request("/cart", { method: "DELETE" });
+    window.dispatchEvent(new Event("cart-updated"));
+    return data;
+  },
 };
+
+// export const wishlistAPI = {
+//   getWishlist: () => request("/wishlist"),
+//   toggle: (productId) => request(`/wishlist/${productId}/toggle`, {
+//     method: "POST",
+//   }),
+//   check: (productId) => request(`/wishlist/${productId}/check`),
+// };
 
 export const wishlistAPI = {
   getWishlist: () => request("/wishlist"),
-  toggle: (productId) => request(`/wishlist/${productId}/toggle`, {
-    method: "POST",
-  }),
+
+  toggle: async (productId) => {
+    const data = await request(`/wishlist/${productId}/toggle`, {
+      method: "POST",
+    });
+    // Navbar ko batao
+    window.dispatchEvent(new Event("wishlist-updated"));
+    return data;
+  },
+
   check: (productId) => request(`/wishlist/${productId}/check`),
 };
 

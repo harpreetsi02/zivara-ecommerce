@@ -24,13 +24,15 @@ export default function Navbar() {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [openCategory, setOpenCategory] = useState(null);
+  const [openCategory, setOpenCategory] = useState(null);  
 
   // GSAP refs
   const navRef = useRef(null);
   const menuIconRef = useRef(null);
   const rightIconsRef = useRef(null);
   const logoRef = useRef(null);
+  const sidebarRef = useRef(null);
+  const overlayRef = useRef(null);
 
   const router = useRouter();
   const { user, logout } = useAuth();
@@ -44,16 +46,18 @@ export default function Navbar() {
       ]
     : [{ name: "Login / Register", href: "/login" }];
 
-  // Mounted
   useEffect(() => {
     setMounted(true);
+    if (user) updateCounts();
 
-    if (user) {
-      updateCounts();
-    } else {
-      setCartCount(0);
-      setWishlistCount(0);
-    }
+    // Custom event listen karo
+    window.addEventListener("cart-updated", updateCounts);
+    window.addEventListener("wishlist-updated", updateCounts);
+
+    return () => {
+      window.removeEventListener("cart-updated", updateCounts);
+      window.removeEventListener("wishlist-updated", updateCounts);
+    };
   }, [user]);
 
   // Fetch cart/wishlist counts
@@ -68,6 +72,36 @@ export default function Navbar() {
       setCartCount(0);
       setWishlistCount(0);
     }
+  };
+
+  // Sidebar open karne ka function ---------->
+  const openSidebar = () => {
+    setMenuOpen(true);
+    // Next tick mein animate karo
+    requestAnimationFrame(() => {
+      gsap.fromTo(sidebarRef.current,
+        { x: "-100%" },
+        { x: "0%", duration: 0.4, ease: "power3.out" }
+      );
+      gsap.fromTo(overlayRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3 }
+      );
+    });
+  };
+
+  // Sidebar close karne ka function ---------->
+  const closeSidebar = () => {
+    gsap.to(sidebarRef.current, {
+      x: "-100%",
+      duration: 0.35,
+      ease: "power3.in",
+      onComplete: () => setMenuOpen(false),
+    });
+    gsap.to(overlayRef.current, {
+      opacity: 0,
+      duration: 0.3,
+    });
   };
 
   // Navbar intro animation
@@ -180,7 +214,7 @@ export default function Navbar() {
       <div ref={menuIconRef}>
         <i
           className="ri-menu-line text-2xl cursor-pointer text-black"
-          onClick={() => setMenuOpen(true)}
+          onClick={openSidebar}
         ></i>
       </div>
 
@@ -263,18 +297,19 @@ export default function Navbar() {
         <div className="fixed inset-0 z-50">
           {/* Overlay */}
           <div
+            ref={overlayRef}
             className="absolute inset-0 bg-black/40"
-            onClick={() => setMenuOpen(false)}
+            onClick={closeSidebar}
           ></div>
 
           {/* Sidebar */}
-          <div className="absolute left-0 top-0 w-[85%] h-full bg-white p-5 overflow-y-auto flex flex-col relative">
+          <div ref={sidebarRef} className="absolute left-0 top-0 w-[85%] h-full bg-white p-5 overflow-y-auto flex flex-col relative">
             {/* TOP */}
             <div className="flex items-center justify-between mb-6">
               {/* Logo */}
               <div
                 className="relative inline-block cursor-pointer"
-                onClick={() => handleNavClick("/")}
+                onClick={() => { closeSidebar(); }}
               >
                 <img
                   className="rotate-20 w-16 translate-x-3"
@@ -292,7 +327,7 @@ export default function Navbar() {
               {/* Close */}
               <i
                 className="ri-close-line text-2xl cursor-pointer text-black"
-                onClick={() => setMenuOpen(false)}
+                onClick={closeSidebar}
               ></i>
             </div>
 

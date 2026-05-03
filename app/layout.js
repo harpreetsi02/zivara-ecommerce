@@ -3,6 +3,7 @@ import "./globals.css";
 import FooterWrapper from "@/components/common/FooterWrapper";
 import Navbar from "@/components/common/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
+import 'remixicon/fonts/remixicon.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -26,10 +26,10 @@ export const categoryData = [
     slug: "bottom",
     subcategories: [
       { name: "Jeans", slug: "jeans" },
-      { name: "Skirts", slug: "skirts" },
+      // { name: "Skirts", slug: "skirts" },
       { name: "Shorts", slug: "shorts" },
       { name: "Trousers", slug: "trousers" },
-      { name: "Leggings", slug: "leggings" },
+      // { name: "Leggings", slug: "leggings" },
       { name: "Baggy Fit", slug: "baggy fit" },
     ],
   },

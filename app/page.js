@@ -9,7 +9,6 @@ import PriceDrop from '@/components/home/PriceDrop'
 import ShopNow from '@/components/home/ShopNow'
 import SpringEdit from '@/components/home/SpringEdit'
 import Trending from '@/components/home/Trending'
-import Footer from "@/components/common/Footer"
 import 'remixicon/fonts/remixicon.css'
 
 // SSR off — GSAP sirf browser mein kaam karta hai

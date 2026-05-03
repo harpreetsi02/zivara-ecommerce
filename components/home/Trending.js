@@ -57,7 +57,7 @@ export default function Trending() {
   if (products.length === 0) return null;
 
   return (
-    <section className="py-10 bg-gray-100 text-center overflow-hidden">
+    <section className="py-10 text-center overflow-hidden">
 
       <h2 className={`${lemonMilk.className} text-2xl text-black uppercase font-light tracking-wide`}>
         trending

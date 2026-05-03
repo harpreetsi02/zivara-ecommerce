@@ -58,7 +58,7 @@ export default function Categories() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-3 grid-rows-4 gap-3">
+        <div className="grid grid-cols-3 grid-rows-auto gap-3">
           {categories.map((item) => (
             <Link key={item.slug} href={`/category/${item.slug}`}>
               <div className="cursor-pointer flex flex-col items-center">

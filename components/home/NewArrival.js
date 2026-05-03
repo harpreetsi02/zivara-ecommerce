@@ -97,6 +97,7 @@ export default function NewArrival() {
                     )}
                   </div>
                   <h3 className="mt-2 text-sm font-medium line-clamp-1">{item.name}</h3>
+                  <p className="text-xs text-gray-400 mt-0.5 capitalize">{item.category}</p>
                   <p className="text-sm text-gray-600">₹{item.price}</p>
                 </div>
               </Link>
