@@ -86,21 +86,6 @@ export const productAPI = {
   },
 };
 
-// export const cartAPI = {
-//   getCart: () => request("/cart"),
-//   addToCart: (body) => request("/cart", {
-//     method: "POST",
-//     body: JSON.stringify(body),
-//   }),
-//   updateQuantity: (itemId, quantity) => request(`/cart/${itemId}?quantity=${quantity}`, {
-//     method: "PUT",
-//   }),
-//   removeItem: (itemId) => request(`/cart/${itemId}`, {
-//     method: "DELETE",
-//   }),
-//   clearCart: () => request("/cart", { method: "DELETE" }),
-// };
-
 export const cartAPI = {
   getCart: () => request("/cart"),
   
@@ -134,14 +119,6 @@ export const cartAPI = {
     return data;
   },
 };
-
-// export const wishlistAPI = {
-//   getWishlist: () => request("/wishlist"),
-//   toggle: (productId) => request(`/wishlist/${productId}/toggle`, {
-//     method: "POST",
-//   }),
-//   check: (productId) => request(`/wishlist/${productId}/check`),
-// };
 
 export const wishlistAPI = {
   getWishlist: () => request("/wishlist"),

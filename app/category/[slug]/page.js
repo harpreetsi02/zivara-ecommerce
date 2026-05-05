@@ -170,7 +170,7 @@ export default function CategoryPage() {
     : null;
 
   return (
-    <div className="mt-16 min-h-screen bg-white overflow-hidden">
+    <div className="mt-16 z-20 min-h-screen overflow-hidden">
 
       {/* Header */}
       <div ref={headingRef} className="px-4 pt-5 pb-3 border-b border-gray-100">

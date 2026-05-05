@@ -8,8 +8,8 @@ import { gsap } from "@/utils/gsap";
 const items = [
     {
       img: "https://images.unsplash.com/photo-1693987647760-03d7babf5dac?w=500",
-      slug: "suit",
-      title: "Suits",
+      slug: "suits",
+      title: "Kurtas & Kurtis",
       big: true,
     },
     {

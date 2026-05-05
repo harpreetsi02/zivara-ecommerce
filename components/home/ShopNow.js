@@ -193,7 +193,7 @@ export default function ShopNow() {
       <div className="px-4 pt-8 pb-4">
         <h2
           ref={headingRef}
-          className={`${lemonMilk.className} text-3xl font-light text-black`}
+          className={`${lemonMilk.className} text-3xl text-center pb-2.5 font-light text-black`}
         >
           Shop{" "}
           <span className="italic text-pink-500 drop-shadow-[0_0_10px_rgba(255,0,150,0.7)]">
@@ -262,7 +262,9 @@ export default function ShopNow() {
                   )}
                 </div>
                 <h3 className="text-sm text-gray-800 font-semibold mt-2 line-clamp-1">{item.name}</h3>
-                <p className="text-xs text-gray-500 capitalize mt-0.5">{item.category}</p>
+                {item.subcategory && (
+                    <p className="text-xs text-gray-500 mt-0.5 capitalize">{item.subcategory}</p>
+                )}
                 <p className="text-sm font-semibold text-black mt-1">₹{item.price}</p>
               </div>
             </Link>

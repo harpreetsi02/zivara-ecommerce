@@ -185,9 +185,8 @@ export default function ProductPage() {
         <div className="flex items-start justify-between gap-2">
           <div>
             <h1 className="text-lg font-semibold leading-snug">{product.name}</h1>
-            {/* <p className="text-xs text-gray-400 mt-0.5 capitalize">{product.category}</p> */}
             {product.subcategory && (
-              <p className="text-xs text-gray-400 mt-0.5 capitalize">{product.subcategory}</p>
+              <p className="text-xs text-gray-500 mt-0.5 capitalize">{product.subcategory}</p>
             )}
           </div>
           <button onClick={handleWishlist} className="shrink-0 mt-1">
@@ -196,7 +195,7 @@ export default function ProductPage() {
         </div>
 
         <p className="text-xl font-semibold mt-3">₹ {product.price}</p>
-        <p className="text-xs text-gray-400">Price incl. of all taxes</p>
+        <p className="text-xs text-gray-500">Price incl. of all taxes</p>
 
         {/* Stock */}
         {product.stock <= 5 && product.stock > 0 && (

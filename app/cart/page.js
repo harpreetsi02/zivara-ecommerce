@@ -58,7 +58,7 @@ export default function CartPage() {
   return (
     <div className="p-4 mt-16">
 
-      <h1 className={`${lemonMilk.className} text-center flex items-center justify-center text-black text-xl font-semibold mb-4`}><span className="text-4xl">y</span>our Cart</h1>
+      <h1 className={`${lemonMilk.className} text-center pb-2.5 border-b border-gray-300 flex items-center justify-center text-black text-xl font-semibold mb-4`}><span className="text-4xl">y</span>our Cart</h1>
 
       {!cart || cart.items.length === 0 ? (
         <div className="text-center mt-20">
