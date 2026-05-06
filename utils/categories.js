@@ -12,6 +12,16 @@ export const categoryData = [
     ],
   },
   {
+    name: "Combos",
+    slug: "combos",
+    subcategories: [
+      { name: "Top & Bottom Set", slug: "top-bottom" },
+      { name: "Shirt & Pants", slug: "shirt-pants" },
+      { name: "Dress & Jacket", slug: "dress-jacket" },
+      { name: "Co-ord Sets", slug: "co-ords-set" },
+    ],
+  },
+  {
     name: "Suits",
     slug: "suits",
     subcategories: [

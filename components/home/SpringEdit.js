@@ -10,8 +10,8 @@ const slides = [
     subtitle: "By Zivara",
     description: "Explore the Collection",
     tags: "Loungewear | Kurtas | Co-ords | Tops",
-    href: "/category/co-ords",
-    image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800",
+    href: "/category/suits",
+    image: "https://www.nishorama.com/cdn/shop/files/DSC8812.jpg?format=webp&v=1768831304&width=768",
     label: "NEW IN: COLLECTIONS",
   },
   {
@@ -19,8 +19,8 @@ const slides = [
     subtitle: "Fresh & Floral",
     description: "New Season Arrivals",
     tags: "Dresses | Skirts | Tops | Jewellery",
-    href: "/category/dresses",
-    image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800",
+    href: "/category/topwear",
+    image: "https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1746423412_9594146.jpg?w=300&dpr=1",
     label: "NEW IN: SPRING",
   },
   {
@@ -28,8 +28,8 @@ const slides = [
     subtitle: "Party Ready",
     description: "Look Your Best",
     tags: "Dresses | Heels | Bags | Jewellery",
-    href: "/category/dresses",
-    image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800",
+    href: "/category/bags",
+    image: "https://azuracloset.com/cdn/shop/files/039A9097-D8BD-4BB3-890F-7473EA6F717A.png?v=1776322023&width=600",
     label: "NEW IN: PARTY WEAR",
   },
   {
@@ -37,8 +37,8 @@ const slides = [
     subtitle: "Bold & Edgy",
     description: "Own Every Street",
     tags: "Jeans | Jackets | Sneakers | Tops",
-    href: "/category/jeans",
-    image: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=800",
+    href: "/category/jacket",
+    image: "https://prod-img.thesouledstore.com/public/theSoul/uploads/catalog/product/1715258248_3167266.jpg?w=300&dpr=1",
     label: "NEW IN: STREET",
   },
 ];
@@ -74,7 +74,9 @@ export default function SpringEdit() {
           <Link key={i} href={slide.href}>
             <div
               className={`transition-opacity duration-700 ${
-                i === current ? "opacity-100 relative" : "opacity-0 absolute inset-0"
+                i === current
+                ? "opacity-100 relative pointer-events-auto"
+                : "opacity-0 absolute inset-0 pointer-events-none"
               }`}
             >
               {/* Background Image */}

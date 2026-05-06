@@ -16,7 +16,7 @@ export default function NewArrival() {
 
   const fetchProducts = async () => {
     try {
-      const data = await productAPI.getLatest(30);
+      const data = await productAPI.getLatest(40);
       setProducts(data);
     } catch (err) {
       console.error(err);
@@ -57,7 +57,6 @@ export default function NewArrival() {
           </button>
         </div>
       </div>
-
       {/* Loading */}
       {loading ? (
         <div className="flex gap-4 overflow-hidden">

@@ -36,10 +36,10 @@ export default function SearchComponent() {
   return (
     <div className="p-4 mt-16">
 
-      <h1 className="text-xl font-semibold mb-1">
+      <h1 className="text-xl text-black font-semibold mb-1">
         Results for &quot;{query}&quot;
       </h1>
-      <p className="text-sm text-gray-400 mb-4">
+      <p className="text-sm text-gray-500 mb-4">
         {products.length} product{products.length !== 1 ? "s" : ""} found
       </p>
 
@@ -56,11 +56,13 @@ export default function SearchComponent() {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-48 object-cover rounded-xl"
+                  className="w-full h-55 object-cover rounded-xl"
                 />
-                <h2 className="text-sm font-medium mt-2 line-clamp-1">{item.name}</h2>
-                <p className="text-xs text-gray-400 capitalize mt-0.5">{item.category}</p>
-                <p className="text-sm font-semibold mt-1">₹{item.price}</p>
+                <h2 className="text-sm text-gray-800 font-semibold mt-2 line-clamp-1">{item.name}</h2>
+                {item.subcategory && (
+                  <p className="text-xs text-gray-500 mt-0.5 capitalize">{item.subcategory}</p>
+                )}
+                <p className="text-sm text-black font-semibold mt-1">₹{item.price}</p>
               </div>
             </Link>
           ))}

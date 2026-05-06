@@ -74,7 +74,7 @@ export default function CartPage() {
               <div key={item.id} className="flex gap-4 items-center border-b border-gray-300 pb-3">
                 <img
                   src={item.productImage}
-                  className="w-20 h-25 object-cover rounded-lg"
+                  className="w-20 h-30 object-cover rounded-lg"
                   alt={item.productName}
                 />
                 <div className="flex-1">
