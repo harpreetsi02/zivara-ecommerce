@@ -1,114 +1,569 @@
+// "use client";
+
+// import { useState } from "react";
+// import { useRouter } from "next/navigation";
+
+// const alertTypes = [
+//   { label: "Order Updates", desc: "Confirmation, dispatch & delivery alerts", key: "orders" },
+//   { label: "Offers & Deals", desc: "Exclusive sale and discount alerts", key: "offers" },
+//   { label: "Price Drop Alerts", desc: "When wishlisted items go on sale", key: "price" },
+//   { label: "Return & Refund Updates", desc: "Status updates on your return requests", key: "returns" },
+// ];
+
+// export default function SmsAlertsPage() {
+//   const router = useRouter();
+//   const [phone, setPhone] = useState("+91 98765 43210");
+//   const [editing, setEditing] = useState(false);
+//   const [smsEnabled, setSmsEnabled] = useState(false);
+//   const [alerts, setAlerts] = useState({ orders: true, offers: false, price: true, returns: true });
+
+//   const toggle = (key) => setAlerts((p) => ({ ...p, [key]: !p[key] }));
+
+//   return (
+//     <div className="mt-16 text-black min-h-screen bg-gray-50 pb-10">
+
+//       {/* Header */}
+//       <div className="px-4 py-5 bg-white border-b border-gray-100">
+//         <div className="flex items-center gap-3">
+//           <i className="ri-arrow-left-line text-xl cursor-pointer" onClick={() => router.back()}></i>
+//           <div>
+//             <h1 className="text-base font-semibold">SMS Alerts</h1>
+//             <p className="text-xs text-gray-400">Manage your SMS preferences</p>
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="px-4 py-4 space-y-3">
+
+//         {/* Master Toggle */}
+//         <div className="bg-white rounded-2xl border border-gray-100 px-4 py-4 flex items-center justify-between">
+//           <div className="flex items-center gap-3">
+//             <div className="w-10 h-10 bg-pink-50 rounded-xl flex items-center justify-center">
+//               <i className="ri-message-line text-pink-500 text-lg"></i>
+//             </div>
+//             <div>
+//               <p className="text-sm font-semibold">SMS Notifications</p>
+//               <p className="text-xs text-gray-400 mt-0.5">{smsEnabled ? "Enabled" : "Disabled"}</p>
+//             </div>
+//           </div>
+//           <button
+//             onClick={() => setSmsEnabled(!smsEnabled)}
+//             className={`w-11 h-6 rounded-full transition-all duration-300 relative ${smsEnabled ? "bg-pink-500" : "bg-gray-200"}`}
+//           >
+//             <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${smsEnabled ? "left-6" : "left-1"}`} />
+//           </button>
+//         </div>
+
+//         {/* Phone Number */}
+//         <div className="bg-white rounded-2xl border border-gray-100 px-4 py-4">
+//           <p className="text-xs text-gray-400 mb-2">SMS will be sent to</p>
+//           {editing ? (
+//             <div className="flex gap-2 items-center">
+//               <input
+//                 value={phone}
+//                 onChange={(e) => setPhone(e.target.value)}
+//                 className="flex-1 text-sm border border-gray-200 rounded-xl px-3 py-2 outline-none"
+//               />
+//               <button
+//                 onClick={() => setEditing(false)}
+//                 className="text-xs bg-black text-white px-3 py-2 rounded-xl"
+//               >
+//                 Save
+//               </button>
+//             </div>
+//           ) : (
+//             <div className="flex items-center justify-between">
+//               <div className="flex items-center gap-2">
+//                 <i className="ri-smartphone-line text-gray-400"></i>
+//                 <p className="text-sm font-semibold">{phone}</p>
+//               </div>
+//               <button onClick={() => setEditing(true)} className="text-xs text-pink-500 font-medium">
+//                 Edit
+//               </button>
+//             </div>
+//           )}
+//         </div>
+
+//         {/* Alert Types */}
+//         <div>
+//           <p className="text-xs text-gray-400 uppercase tracking-widest px-1 mb-2">Alert Types</p>
+//           <div className={`bg-white rounded-2xl border border-gray-100 overflow-hidden transition-opacity ${!smsEnabled ? "opacity-40 pointer-events-none" : ""}`}>
+//             {alertTypes.map((item, i) => (
+//               <div key={item.key} className={`flex items-center justify-between px-4 py-3.5 ${i < alertTypes.length - 1 ? "border-b border-gray-100" : ""}`}>
+//                 <div>
+//                   <p className="text-sm font-medium">{item.label}</p>
+//                   <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
+//                 </div>
+//                 <button
+//                   onClick={() => toggle(item.key)}
+//                   className={`w-11 h-6 rounded-full transition-all duration-300 relative flex-shrink-0 ml-3 ${alerts[item.key] ? "bg-pink-500" : "bg-gray-200"}`}
+//                 >
+//                   <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${alerts[item.key] ? "left-6" : "left-1"}`} />
+//                 </button>
+//               </div>
+//             ))}
+//           </div>
+//           {!smsEnabled && (
+//             <p className="text-xs text-gray-400 text-center mt-2">Enable SMS alerts to manage preferences</p>
+//           )}
+//         </div>
+
+//       </div>
+//     </div>
+//   );
+// }
+
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { lemonMilk } from "../../fonts";
 
 const alertTypes = [
-  { label: "Order Updates", desc: "Confirmation, dispatch & delivery alerts", key: "orders" },
-  { label: "Offers & Deals", desc: "Exclusive sale and discount alerts", key: "offers" },
-  { label: "Price Drop Alerts", desc: "When wishlisted items go on sale", key: "price" },
-  { label: "Return & Refund Updates", desc: "Status updates on your return requests", key: "returns" },
+  {
+    label: "Order Updates",
+    desc: "Confirmation, dispatch & delivery alerts",
+    key: "orders",
+    icon: "ri-shopping-bag-line",
+  },
+
+  {
+    label: "Offers & Deals",
+    desc: "Exclusive sale and discount alerts",
+    key: "offers",
+    icon: "ri-price-tag-3-line",
+  },
+
+  {
+    label: "Price Drop Alerts",
+    desc: "When wishlisted items go on sale",
+    key: "price",
+    icon: "ri-notification-3-line",
+  },
+
+  {
+    label: "Return & Refund Updates",
+    desc: "Status updates on your return requests",
+    key: "returns",
+    icon: "ri-refresh-line",
+  },
 ];
 
 export default function SmsAlertsPage() {
   const router = useRouter();
-  const [phone, setPhone] = useState("+91 98765 43210");
-  const [editing, setEditing] = useState(false);
-  const [smsEnabled, setSmsEnabled] = useState(false);
-  const [alerts, setAlerts] = useState({ orders: true, offers: false, price: true, returns: true });
 
-  const toggle = (key) => setAlerts((p) => ({ ...p, [key]: !p[key] }));
+  const [phone, setPhone] = useState(
+    "+91 98765 43210"
+  );
+
+  const [editing, setEditing] =
+    useState(false);
+
+  const [smsEnabled, setSmsEnabled] =
+    useState(false);
+
+  const [alerts, setAlerts] = useState({
+    orders: true,
+    offers: false,
+    price: true,
+    returns: true,
+  });
+
+  const toggle = (key) =>
+    setAlerts((p) => ({
+      ...p,
+      [key]: !p[key],
+    }));
 
   return (
-    <div className="mt-16 text-black min-h-screen bg-gray-50 pb-10">
+    <section className="min-h-screen bg-white pt-24 pb-20 overflow-hidden">
 
-      {/* Header */}
-      <div className="px-4 py-5 bg-white border-b border-gray-100">
-        <div className="flex items-center gap-3">
-          <i className="ri-arrow-left-line text-xl cursor-pointer" onClick={() => router.back()}></i>
-          <div>
-            <h1 className="text-base font-semibold">SMS Alerts</h1>
-            <p className="text-xs text-gray-400">Manage your SMS preferences</p>
-          </div>
+      {/* HEADING */}
+      <div className="text-center mb-12 px-4">
+
+        <div className="flex items-center justify-center gap-4">
+
+          <button
+            onClick={() => router.back()}
+            className="
+              w-11 h-11
+              rounded-full
+              border border-gray-200
+              flex items-center justify-center
+              text-black
+              hover:bg-black
+              hover:text-white
+              transition-all
+              duration-300
+            "
+          >
+            <i className="ri-arrow-left-line text-lg"></i>
+          </button>
+
+          <h1
+            className={`${lemonMilk.className} flex items-center text-black tracking-wide`}
+          >
+            <span className="text-5xl md:text-7xl leading-none">
+              S
+            </span>
+
+            <span className="text-xl md:text-4xl">
+              MS Alerts
+            </span>
+          </h1>
+
         </div>
+
+        <p className="mt-5 text-xs md:text-sm uppercase tracking-[0.3em] text-gray-400">
+          Manage Your SMS Preferences
+        </p>
+
       </div>
 
-      <div className="px-4 py-4 space-y-3">
+      <div className="space-y-8 px-4 md:px-6">
 
-        {/* Master Toggle */}
-        <div className="bg-white rounded-2xl border border-gray-100 px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-pink-50 rounded-xl flex items-center justify-center">
-              <i className="ri-message-line text-pink-500 text-lg"></i>
+        {/* MASTER TOGGLE */}
+        <div
+          className="
+            bg-black
+            rounded-[2rem]
+            overflow-hidden
+            relative
+          "
+        >
+
+          {/* Glow */}
+          <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+
+          <div className="relative p-6 md:p-8 flex items-center justify-between gap-5">
+
+            {/* LEFT */}
+            <div className="flex items-center gap-5">
+
+              <div
+                className="
+                  w-16
+                  h-16
+                  rounded-[1.5rem]
+                  bg-white/10
+                  backdrop-blur-md
+                  border border-white/10
+                  flex items-center justify-center
+                  shrink-0
+                "
+              >
+
+                <i className="ri-message-2-line text-3xl text-white"></i>
+
+              </div>
+
+              <div>
+
+                <p className="text-white/50 text-xs uppercase tracking-[0.25em]">
+                  Notifications
+                </p>
+
+                <h2 className="text-2xl md:text-4xl font-light text-white mt-3">
+                  SMS Alerts
+                </h2>
+
+                <p className="text-white/60 text-sm mt-4">
+                  {smsEnabled
+                    ? "Enabled"
+                    : "Disabled"}
+                </p>
+
+              </div>
+
             </div>
-            <div>
-              <p className="text-sm font-semibold">SMS Notifications</p>
-              <p className="text-xs text-gray-400 mt-0.5">{smsEnabled ? "Enabled" : "Disabled"}</p>
-            </div>
+
+            {/* TOGGLE */}
+            <button
+              onClick={() =>
+                setSmsEnabled(!smsEnabled)
+              }
+              className={`
+                w-20
+                h-11
+                rounded-full
+                relative
+                transition-all
+                duration-300
+                ${
+                  smsEnabled
+                    ? "bg-white"
+                    : "bg-white/20"
+                }
+              `}
+            >
+
+              <span
+                className={`
+                  absolute
+                  top-1.5
+                  w-8
+                  h-8
+                  rounded-full
+                  transition-all
+                  duration-300
+                  ${
+                    smsEnabled
+                      ? "left-10 bg-black"
+                      : "left-1.5 bg-white"
+                  }
+                `}
+              />
+
+            </button>
+
           </div>
-          <button
-            onClick={() => setSmsEnabled(!smsEnabled)}
-            className={`w-11 h-6 rounded-full transition-all duration-300 relative ${smsEnabled ? "bg-pink-500" : "bg-gray-200"}`}
-          >
-            <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${smsEnabled ? "left-6" : "left-1"}`} />
-          </button>
+
         </div>
 
-        {/* Phone Number */}
-        <div className="bg-white rounded-2xl border border-gray-100 px-4 py-4">
-          <p className="text-xs text-gray-400 mb-2">SMS will be sent to</p>
+        {/* PHONE */}
+        <div className="bg-[#f8f8f8] rounded-[2rem] p-6 md:p-8">
+
+          <div className="flex items-center justify-between gap-5 mb-6">
+
+            <div>
+
+              <p className="text-xs uppercase tracking-[0.25em] text-gray-400">
+                Registered Number
+              </p>
+
+              <h2 className="text-2xl md:text-4xl font-light text-black mt-4">
+                {phone}
+              </h2>
+
+            </div>
+
+            <div
+              className="
+                w-14 h-14
+                rounded-full
+                bg-white
+                flex items-center justify-center
+                shrink-0
+              "
+            >
+
+              <i className="ri-smartphone-line text-2xl text-black"></i>
+
+            </div>
+
+          </div>
+
           {editing ? (
-            <div className="flex gap-2 items-center">
+
+            <div className="flex flex-col md:flex-row gap-3">
+
               <input
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="flex-1 text-sm border border-gray-200 rounded-xl px-3 py-2 outline-none"
+                onChange={(e) =>
+                  setPhone(e.target.value)
+                }
+                className="
+                  flex-1
+                  bg-white
+                  border
+                  border-gray-200
+                  rounded-full
+                  px-5
+                  py-4
+                  text-black
+                  outline-none
+                  focus:border-black
+                  transition-all
+                "
               />
+
               <button
-                onClick={() => setEditing(false)}
-                className="text-xs bg-black text-white px-3 py-2 rounded-xl"
+                onClick={() =>
+                  setEditing(false)
+                }
+                className="
+                  px-8
+                  py-4
+                  rounded-full
+                  bg-black
+                  text-white
+                  text-sm
+                  uppercase
+                  tracking-[0.2em]
+                  hover:bg-neutral-800
+                  transition-all
+                  duration-300
+                "
               >
                 Save
               </button>
+
             </div>
+
           ) : (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <i className="ri-smartphone-line text-gray-400"></i>
-                <p className="text-sm font-semibold">{phone}</p>
-              </div>
-              <button onClick={() => setEditing(true)} className="text-xs text-pink-500 font-medium">
-                Edit
-              </button>
-            </div>
+
+            <button
+              onClick={() =>
+                setEditing(true)
+              }
+              className="
+                px-7
+                py-4
+                rounded-full
+                border
+                border-black
+                text-black
+                text-sm
+                uppercase
+                tracking-[0.2em]
+                hover:bg-black
+                hover:text-white
+                transition-all
+                duration-300
+              "
+            >
+              Edit Number
+            </button>
+
           )}
+
         </div>
 
-        {/* Alert Types */}
+        {/* ALERT TYPES */}
         <div>
-          <p className="text-xs text-gray-400 uppercase tracking-widest px-1 mb-2">Alert Types</p>
-          <div className={`bg-white rounded-2xl border border-gray-100 overflow-hidden transition-opacity ${!smsEnabled ? "opacity-40 pointer-events-none" : ""}`}>
-            {alertTypes.map((item, i) => (
-              <div key={item.key} className={`flex items-center justify-between px-4 py-3.5 ${i < alertTypes.length - 1 ? "border-b border-gray-100" : ""}`}>
-                <div>
-                  <p className="text-sm font-medium">{item.label}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
-                </div>
-                <button
-                  onClick={() => toggle(item.key)}
-                  className={`w-11 h-6 rounded-full transition-all duration-300 relative flex-shrink-0 ml-3 ${alerts[item.key] ? "bg-pink-500" : "bg-gray-200"}`}
-                >
-                  <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${alerts[item.key] ? "left-6" : "left-1"}`} />
-                </button>
-              </div>
-            ))}
+
+          <div className="mb-5">
+
+            <p className="text-xs uppercase tracking-[0.3em] text-gray-400">
+              Alert Types
+            </p>
+
           </div>
+
+          <div
+            className={`
+              space-y-4
+              transition-all
+              duration-300
+              ${
+                !smsEnabled
+                  ? "opacity-40 pointer-events-none"
+                  : ""
+              }
+            `}
+          >
+
+            {alertTypes.map((item) => (
+
+              <div
+                key={item.key}
+                className="
+                  group
+                  bg-[#f8f8f8]
+                  rounded-[2rem]
+                  p-5 md:p-6
+                  flex
+                  items-center
+                  justify-between
+                  gap-5
+                "
+              >
+
+                {/* LEFT */}
+                <div className="flex items-center gap-5">
+
+                  {/* ICON */}
+                  <div
+                    className="
+                      w-16
+                      h-16
+                      rounded-[1.5rem]
+                      bg-white
+                      flex items-center justify-center
+                      shrink-0
+                    "
+                  >
+
+                    <i
+                      className={`${item.icon} text-2xl text-black`}
+                    ></i>
+
+                  </div>
+
+                  {/* CONTENT */}
+                  <div>
+
+                    <h2 className="text-lg md:text-2xl font-light text-black">
+                      {item.label}
+                    </h2>
+
+                    <p className="text-sm text-gray-400 mt-3 leading-6">
+                      {item.desc}
+                    </p>
+
+                  </div>
+
+                </div>
+
+                {/* TOGGLE */}
+                <button
+                  onClick={() =>
+                    toggle(item.key)
+                  }
+                  className={`
+                    w-16
+                    h-9
+                    rounded-full
+                    relative
+                    transition-all
+                    duration-300
+                    shrink-0
+                    ${
+                      alerts[item.key]
+                        ? "bg-black"
+                        : "bg-gray-300"
+                    }
+                  `}
+                >
+
+                  <span
+                    className={`
+                      absolute
+                      top-1
+                      w-7
+                      h-7
+                      rounded-full
+                      bg-white
+                      transition-all
+                      duration-300
+                      ${
+                        alerts[item.key]
+                          ? "left-8"
+                          : "left-1"
+                      }
+                    `}
+                  />
+
+                </button>
+
+              </div>
+
+            ))}
+
+          </div>
+
           {!smsEnabled && (
-            <p className="text-xs text-gray-400 text-center mt-2">Enable SMS alerts to manage preferences</p>
+
+            <p className="text-center text-gray-400 text-xs uppercase tracking-[0.2em] mt-6">
+              Enable SMS alerts to manage preferences
+            </p>
+
           )}
+
         </div>
 
       </div>
-    </div>
+
+    </section>
   );
 }

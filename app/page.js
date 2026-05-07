@@ -45,7 +45,7 @@ const Home = () => {
 
     {/* Main content */}
     <div
-      className={`bg-amber-50 mt-15 h-full overflow-hidden relative z-20 transition-opacity duration-300 ${
+      className={`mt-15 h-full overflow-hidden relative z-20 transition-opacity duration-300 ${
         contentVisible ? "opacity-100" : "opacity-0"
       }`}
     >

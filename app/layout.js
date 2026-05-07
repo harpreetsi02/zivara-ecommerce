@@ -4,16 +4,10 @@ import FooterWrapper from "@/components/common/FooterWrapper";
 import Navbar from "@/components/common/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
 import 'remixicon/fonts/remixicon.css';
+import PageWrapper from "@/components/common/PageWrapper";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistSans = Geist({variable: "--font-geist-sans", subsets: ["latin"],});
+const geistMono = Geist_Mono({variable: "--font-geist-mono",subsets: ["latin"],});
 
 export const metadata = {
   title: "Zivara",
@@ -29,12 +23,15 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <AuthProvider>
           <Navbar/>
-          {children}
-          <img
-            src="/images/lips.png"
-            className="-rotate-20 w-40 fixed bottom-20 opacity-20 right-5 pointer-events-none z-10"
-          />
-          <FooterWrapper/>
+          <PageWrapper>
+            {children}
+          
+            <img
+              src="/images/lips.png"
+              className="-rotate-20 w-40 md:w-60 fixed bottom-20 md:bottom-25 opacity-20 right-5 md:right-90 pointer-events-none z-10"
+            />
+            <FooterWrapper/>
+          </PageWrapper>
         </AuthProvider>
       </body>
     </html>
