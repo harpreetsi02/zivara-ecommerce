@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
           
             <img
               src="/images/lips.png"
-              className="-rotate-20 w-40 md:w-60 fixed bottom-20 md:bottom-25 opacity-20 right-5 md:right-90 pointer-events-none z-10"
+              className="-rotate-20 w-40 z-10 md:w-60 fixed bottom-20 md:bottom-25 opacity-20 right-5 md:right-90 pointer-events-none"
             />
             <FooterWrapper/>
           </PageWrapper>

@@ -71,7 +71,7 @@ export default function WishlistPage() {
   // LOADING
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-14 h-14 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="text-gray-400 text-sm uppercase tracking-[0.25em] mt-5">
@@ -82,7 +82,7 @@ export default function WishlistPage() {
     );
 
   return (
-    <section className="min-h-screen bg-white pt-24 pb-20 overflow-hidden">
+    <section className="min-h-screen relative z-20 pt-24 pb-20 overflow-hidden">
       {/* HEADING */}
       <div className="text-center mb-12 px-4">
         <h1

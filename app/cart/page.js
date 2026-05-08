@@ -67,7 +67,7 @@ export default function CartPage() {
   // LOADING
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-14 h-14 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="text-gray-400 text-sm uppercase tracking-[0.25em] mt-5">
@@ -78,7 +78,7 @@ export default function CartPage() {
     );
 
   return (
-    <section className="min-h-screen z-20 bg-white pt-24 pb-32 overflow-hidden">
+    <section className="min-h-screen z-20 relative pt-24 pb-32 overflow-hidden">
       {/* HEADING */}
       <div className="text-center mb-12 px-4">
         <h1

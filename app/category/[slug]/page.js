@@ -170,7 +170,7 @@ export default function CategoryPage() {
     : null;
 
   return (
-    <section className="min-h-screen pt-20 pb-16 overflow-hidden">
+    <section className="min-h-screen relative z-20 pt-20 pb-16 overflow-hidden">
       {/* GLOW */}
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-140 h-140 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -374,7 +374,7 @@ export default function CategoryPage() {
                         </p>
 
                         <div
-                          className="w-9 h-9 rounded-full bg-[#f7f7f7] flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all"
+                          className="w-9 h-9 text-black border border-gray-300 rounded-full bg-[#f7f7f7] flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all"
                         >
                           <i className="ri-arrow-right-up-line text-sm"></i>
                         </div>

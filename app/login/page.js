@@ -8,32 +8,15 @@ import { lemonMilk } from "@/app/fonts";
 
 export default function LoginPage() {
   const { login, register } = useAuth();
-
   const router = useRouter();
 
-  const [isLogin, setIsLogin] =
-    useState(true);
-
-  const [step, setStep] =
-    useState(1);
-
-  const [loading, setLoading] =
-    useState(false);
-
-  const [error, setError] =
-    useState("");
-
-  const [otp, setOtp] =
-    useState("");
-
-  const [showPassword, setShowPassword] =
-    useState(false);
-
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [isLogin, setIsLogin] = useState(true);
+  const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [otp, setOtp] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", password: ""});
 
   const handleChange = (key, val) =>
     setForm((prev) => ({
@@ -43,12 +26,7 @@ export default function LoginPage() {
 
   // SEND OTP
   const handleSendOtp = async () => {
-
-    if (
-      !form.name ||
-      !form.email ||
-      !form.password
-    ) {
+    if ( !form.name || !form.email || !form.password) {
       setError("Please fill all fields");
       return;
     }
@@ -61,43 +39,27 @@ export default function LoginPage() {
     }
 
     setError("");
-
     setLoading(true);
-
     try {
-
       await otpAPI.sendOtp(form.email);
-
       setStep(2);
-
     } catch (err) {
-
       setError(err.message);
-
     } finally {
-
       setLoading(false);
-
     }
   };
 
   // VERIFY OTP
   const handleVerifyAndRegister =
     async () => {
-
       if (!otp || otp.length !== 6) {
-
         setError("Enter 6 digit OTP");
-
         return;
       }
-
       setError("");
-
       setLoading(true);
-
       try {
-
         await otpAPI.verifyOtp(
           form.email,
           otp
@@ -108,193 +70,109 @@ export default function LoginPage() {
           form.email,
           form.password
         );
-
         router.push("/");
-
       } catch (err) {
-
         setError(err.message);
-
       } finally {
-
         setLoading(false);
-
       }
     };
 
   // LOGIN
   const handleLogin = async () => {
-
     if (!form.email || !form.password) {
-
       setError("Please fill all fields");
-
       return;
     }
-
     setError("");
-
     setLoading(true);
 
     try {
-
-      await login(
-        form.email,
-        form.password
-      );
-
+      await login( form.email, form.password);
       router.push("/");
-
     } catch (err) {
-
       setError(err.message);
-
     } finally {
-
       setLoading(false);
-
     }
   };
 
   return (
     <section className="min-h-screen md:mt-16 overflow-hidden">
-
       {/* LEFT / TOP SECTION */}
       <div className="grid md:grid-cols-2 min-h-screen">
-
         {/* VISUAL SIDE */}
         <div
-          className="
-            relative
-            hidden
-            md:flex
-            bg-black
-            text-white
-            overflow-hidden
-            flex-col
-            justify-between
-            p-12
-          "
+          className="relative hidden md:flex bg-black text-white overflow-hidden flex-col justify-between p-12"
         >
-
           {/* Glow */}
-          <div className="absolute -top-40 -right-40 w-[30rem] h-[30rem] bg-pink-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute -top-40 -right-40 w-120 h-120 bg-pink-500/10 rounded-full blur-3xl"></div>
 
           {/* LOGO */}
           <div className="relative z-10">
-
             <h1
               className={`${lemonMilk.className} text-5xl flex items-center`}
             >
-              <span className="text-8xl">
-                Z
-              </span>
-              ivara
+              <span className="text-8xl">Z</span>ivara
             </h1>
 
             <p className="text-white/50 uppercase tracking-[0.3em] text-xs mt-6">
               Fashion For Your Vibe
             </p>
-
           </div>
 
           {/* CENTER */}
           <div className="relative z-10">
-
             <h2 className="text-6xl font-light leading-tight">
-              Discover
-              <br />
-              luxury fashion
-              <br />
-              made for you.
+              Discover <br /> luxury fashion <br /> made for you.
             </h2>
 
             <p className="text-white/60 text-base leading-8 mt-10 max-w-lg">
-              Join the Zivara experience with
-              exclusive collections, effortless
-              shopping, and premium style.
+              Join the Zivara experience with exclusive collections, effortless shopping, and premium style.
             </p>
 
           </div>
 
           {/* FOOTER */}
           <div className="relative z-10 flex items-center gap-10 text-white/40 text-sm uppercase tracking-[0.2em]">
-
             <p>Premium Fashion</p>
-
             <p>Fast Delivery</p>
-
             <p>Secure Payments</p>
-
           </div>
-
         </div>
 
         {/* FORM SIDE */}
         <div
-          className="
-            flex
-            flex-col
-            justify-center
-            px-6
-            md:px-16
-            py-24
-          "
+          className=" flex flex-col justify-center px-6 md:px-16 py-24"
         >
-
           {/* MOBILE LOGO */}
           <div className="md:hidden text-center mb-12">
-
             <h1
               className={`${lemonMilk.className} text-2xl flex items-center justify-center text-black`}
             >
-              <span className="text-5xl">
-                Z
-              </span>
-              ivara
+              <span className="text-5xl">Z</span>ivara
             </h1>
 
             <p className="text-xs uppercase tracking-[0.25em] text-gray-400 mt-4">
               Premium Fashion Store
             </p>
-
           </div>
 
           {/* TOGGLE */}
           {(isLogin || step === 1) && (
-
             <div
-              className="
-                bg-[#f8f8f8]
-                rounded-full
-                p-2
-                flex
-                mb-10
-              "
+              className="bg-[#f8f8f8] rounded-full p-2 flex mb-10"
             >
-
               <button
                 onClick={() => {
-
                   setIsLogin(true);
-
                   setError("");
-
                   setStep(1);
                 }}
-                className={`
-                  flex-1
-                  py-4
-                  rounded-full
-                  text-sm
-                  uppercase
-                  tracking-[0.2em]
-                  transition-all
-                  duration-300
-                  ${
-                    isLogin
-                      ? "bg-black text-white"
-                      : "text-gray-400"
+                className={`flex-1 py-4 rounded-full text-sm tracking-[0.2em] uppercase duration-300 transition-all
+                  ${isLogin
+                    ? "bg-black text-white"
+                    : "text-gray-400"
                   }
                 `}
               >
@@ -303,401 +181,207 @@ export default function LoginPage() {
 
               <button
                 onClick={() => {
-
                   setIsLogin(false);
-
                   setError("");
-
                   setStep(1);
                 }}
-                className={`
-                  flex-1
-                  py-4
-                  rounded-full
-                  text-sm
-                  uppercase
-                  tracking-[0.2em]
-                  transition-all
-                  duration-300
-                  ${
-                    !isLogin
-                      ? "bg-black text-white"
-                      : "text-gray-400"
+                className={`flex-1 py-4 rounded-full text-sm uppercase tracking-[0.2em] transition-all duration-300
+                  ${!isLogin
+                    ? "bg-black text-white"
+                    : "text-gray-400"
                   }
                 `}
               >
                 Register
               </button>
-
             </div>
-
           )}
 
           {/* TITLE */}
           <div className="mb-10">
-
             <p className="text-xs uppercase tracking-[0.3em] text-gray-400">
-
               {isLogin
                 ? "Welcome Back"
                 : step === 1
                 ? "Create Account"
                 : "Verify Email"}
-
             </p>
 
             <h2 className="text-4xl md:text-6xl font-light text-black mt-5 leading-tight">
-
               {isLogin
                 ? "Login to continue."
                 : step === 1
                 ? "Join the fashion world."
                 : "Enter your OTP."}
-
             </h2>
-
           </div>
 
           {/* LOGIN */}
           {isLogin && (
-
             <div className="space-y-5">
-
               {/* EMAIL */}
               <div>
-
                 <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-3">
                   Email Address
                 </p>
 
                 <div
-                  className="
-                    bg-[#f8f8f8]
-                    border
-                    border-gray-200
-                    rounded-full
-                    px-5
-                    py-4
-                    flex
-                    items-center
-                    gap-3
-                    focus-within:border-black
-                    transition-all
-                  "
+                  className="bg-[#f8f8f8] border border-gray-200 rounded-full px-5 py-4 flex items-center gap-3 focus-within:border-black transition-all"
                 >
-
                   <i className="ri-mail-line text-gray-400 text-lg"></i>
 
                   <input
                     type="email"
                     value={form.email}
-                    onChange={(e) =>
-                      handleChange(
-                        "email",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => handleChange("email", e.target.value)}
                     placeholder="Enter your email"
-                    className="
-                      flex-1
-                      bg-transparent
-                      outline-none
-                      text-black
-                      placeholder:text-gray-400
-                    "
+                    className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-400"
                   />
-
                 </div>
-
               </div>
 
               {/* PASSWORD */}
               <div>
-
                 <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-3">
                   Password
                 </p>
 
                 <div
-                  className="
-                    bg-[#f8f8f8]
-                    border
-                    border-gray-200
-                    rounded-full
-                    px-5
-                    py-4
-                    flex
-                    items-center
-                    gap-3
-                    focus-within:border-black
-                    transition-all
-                  "
+                  className="bg-[#f8f8f8] border border-gray-200 rounded-full px-5 py-4 flex items-center gap-3 focus-within:border-black transition-all"
                 >
-
                   <i className="ri-lock-line text-gray-400 text-lg"></i>
 
                   <input
-                    type={
-                      showPassword
-                        ? "text"
-                        : "password"
-                    }
+                    type={ showPassword ? "text" : "password" }
                     value={form.password}
-                    onChange={(e) =>
-                      handleChange(
-                        "password",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => handleChange("password", e.target.value)}
                     placeholder="Enter your password"
-                    className="
-                      flex-1
-                      bg-transparent
-                      outline-none
-                      text-black
-                      placeholder:text-gray-400
-                    "
+                    className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-400"
                   />
 
                   <button
-                    onClick={() =>
-                      setShowPassword(
-                        !showPassword
-                      )
-                    }
+                    onClick={() => setShowPassword(!showPassword)}
                   >
-
-                    <i
-                      className={`${
-                        showPassword
-                          ? "ri-eye-off-line"
-                          : "ri-eye-line"
-                      } text-gray-400 text-lg`}
-                    ></i>
-
+                    <i className={`${showPassword ? "ri-eye-off-line" : "ri-eye-line"} text-gray-400 text-lg`}></i>
                   </button>
-
                 </div>
-
               </div>
 
               {/* ERROR */}
               {error && (
-
-                <div className="bg-red-50 border border-red-100 rounded-[1.5rem] px-5 py-4">
-
+                <div className="bg-red-50 border border-red-100 rounded-3xl px-5 py-4">
                   <p className="text-red-500 text-sm">
                     {error}
                   </p>
-
                 </div>
-
               )}
 
               {/* BUTTON */}
               <button
                 onClick={handleLogin}
                 disabled={loading}
-                className={`
-                  w-full
-                  py-5
-                  rounded-full
-                  text-sm
-                  uppercase
-                  tracking-[0.2em]
-                  text-white
-                  transition-all
-                  duration-300
-                  ${
-                    loading
-                      ? "bg-gray-300"
-                      : "bg-black hover:bg-neutral-800"
+                className={`w-full py-5 rounded-full text-sm uppercase tracking-[0.2em] text-white transition-all duration-300
+                  ${loading
+                    ? "bg-gray-300"
+                    : "bg-black hover:bg-neutral-800"
                   }
                 `}
               >
-
                 {loading
                   ? "Logging In..."
                   : "Login"}
-
               </button>
-
             </div>
-
           )}
 
           {/* REGISTER STEP 1 */}
           {!isLogin && step === 1 && (
-
             <div className="space-y-5">
-
               {[
                 {
                   key: "name",
                   icon: "ri-user-line",
                   label: "Full Name",
                 },
-
                 {
                   key: "email",
                   icon: "ri-mail-line",
                   label: "Email Address",
                 },
-
                 {
                   key: "password",
                   icon: "ri-lock-line",
                   label: "Password",
                 },
               ].map((field) => (
-
                 <div key={field.key}>
-
                   <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-3">
                     {field.label}
                   </p>
 
                   <div
-                    className="
-                      bg-[#f8f8f8]
-                      border
-                      border-gray-200
-                      rounded-full
-                      px-5
-                      py-4
-                      flex
-                      items-center
-                      gap-3
-                      focus-within:border-black
-                      transition-all
-                    "
+                    className="bg-[#f8f8f8] border border-gray-200 rounded-full px-5 py-4 flex items-center gap-3 focus-within:border-black transition-all"
                   >
-
-                    <i
-                      className={`${field.icon} text-gray-400 text-lg`}
-                    ></i>
+                    <i className={`${field.icon} text-gray-400 text-lg`}></i>
 
                     <input
-                      type={
-                        field.key ===
-                          "password" &&
-                        !showPassword
-                          ? "password"
-                          : "text"
+                      type={field.key === "password" && !showPassword
+                        ? "password"
+                        : "text"
                       }
                       value={form[field.key]}
-                      onChange={(e) =>
-                        handleChange(
-                          field.key,
-                          e.target.value
-                        )
-                      }
+                      onChange={(e) => handleChange(field.key, e.target.value)}
                       placeholder={`Enter ${field.label.toLowerCase()}`}
-                      className="
-                        flex-1
-                        bg-transparent
-                        outline-none
-                        text-black
-                        placeholder:text-gray-400
-                      "
+                      className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-400"
                     />
 
-                    {field.key ===
-                      "password" && (
-
+                    {field.key === "password" && (
                       <button
-                        onClick={() =>
-                          setShowPassword(
-                            !showPassword
-                          )
-                        }
+                        onClick={() => setShowPassword(!showPassword)}
                       >
-
-                        <i
-                          className={`${
-                            showPassword
-                              ? "ri-eye-off-line"
-                              : "ri-eye-line"
-                          } text-gray-400 text-lg`}
-                        ></i>
-
+                        <i className={`${ showPassword ? "ri-eye-off-line" : "ri-eye-line"} text-gray-400 text-lg`}></i>
                       </button>
-
                     )}
-
                   </div>
-
                 </div>
-
               ))}
 
               {/* ERROR */}
               {error && (
-
-                <div className="bg-red-50 border border-red-100 rounded-[1.5rem] px-5 py-4">
-
+                <div className="bg-red-50 border border-red-100 rounded-3xl px-5 py-4">
                   <p className="text-red-500 text-sm">
                     {error}
                   </p>
-
                 </div>
-
               )}
 
               {/* BUTTON */}
               <button
                 onClick={handleSendOtp}
                 disabled={loading}
-                className={`
-                  w-full
-                  py-5
-                  rounded-full
-                  text-sm
-                  uppercase
-                  tracking-[0.2em]
-                  text-white
-                  transition-all
-                  duration-300
-                  ${
-                    loading
-                      ? "bg-gray-300"
-                      : "bg-black hover:bg-neutral-800"
+                className={`w-full py-5 rounded-full text-sm uppercase tracking-[0.2em] text-white transition-all duration-300
+                  ${loading
+                    ? "bg-gray-300"
+                    : "bg-black hover:bg-neutral-800"
                   }
                 `}
               >
-
                 {loading
                   ? "Sending OTP..."
                   : "Send OTP"}
-
               </button>
-
             </div>
-
           )}
 
           {/* OTP */}
           {!isLogin && step === 2 && (
-
             <div className="space-y-6">
-
               {/* CARD */}
-              <div className="bg-[#f8f8f8] rounded-[2rem] p-8 text-center">
-
+              <div className="bg-[#f8f8f8] rounded-4xl p-8 text-center">
                 <div
-                  className="
-                    w-20
-                    h-20
-                    rounded-full
-                    bg-black
-                    text-white
-                    flex items-center justify-center
-                    mx-auto
-                  "
+                  className="w-20 h-20 rounded-full bg-black text-white flex items-center justify-center mx-auto"
                 >
-
                   <i className="ri-mail-send-line text-4xl"></i>
-
                 </div>
 
                 <h2 className="text-3xl font-light text-black mt-8">
@@ -711,12 +395,10 @@ export default function LoginPage() {
                     {form.email}
                   </span>
                 </p>
-
               </div>
 
               {/* OTP */}
               <div>
-
                 <p className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-3">
                   Enter OTP
                 </p>
@@ -724,75 +406,38 @@ export default function LoginPage() {
                 <input
                   type="number"
                   value={otp}
-                  onChange={(e) =>
-                    setOtp(
-                      e.target.value.slice(0, 6)
-                    )
-                  }
+                  onChange={(e) => setOtp(e.target.value.slice(0, 6))}
                   placeholder="• • • • • •"
-                  className="
-                    w-full
-                    bg-[#f8f8f8]
-                    border
-                    border-gray-200
-                    rounded-[1.5rem]
-                    py-6
-                    text-center
-                    text-3xl
-                    tracking-[1rem]
-                    outline-none
-                    focus:border-black
-                  "
+                  className="w-full bg-[#f8f8f8] border border-gray-200 rounded-3xl py-6 text-center text-3xl tracking-[1rem] outline-none focus:border-black"
                 />
-
               </div>
 
               {/* ERROR */}
               {error && (
 
-                <div className="bg-red-50 border border-red-100 rounded-[1.5rem] px-5 py-4">
-
+                <div className="bg-red-50 border border-red-100 rounded-3xl px-5 py-4">
                   <p className="text-red-500 text-sm">
                     {error}
                   </p>
-
                 </div>
-
               )}
 
               {/* BUTTON */}
               <button
-                onClick={
-                  handleVerifyAndRegister
-                }
+                onClick={handleVerifyAndRegister}
                 disabled={loading}
-                className={`
-                  w-full
-                  py-5
-                  rounded-full
-                  text-sm
-                  uppercase
-                  tracking-[0.2em]
-                  text-white
-                  transition-all
-                  duration-300
-                  ${
-                    loading
-                      ? "bg-gray-300"
-                      : "bg-black hover:bg-neutral-800"
+                className={`w-full py-5 rounded-full text-sm uppercase tracking-[0.2em] text-white transition-all duration-300
+                  ${loading
+                    ? "bg-gray-300"
+                    : "bg-black hover:bg-neutral-800"
                   }
                 `}
               >
-
-                {loading
-                  ? "Verifying..."
-                  : "Verify & Create Account"}
-
+                {loading ? "Verifying..." : "Verify & Create Account"}
               </button>
 
               {/* ACTIONS */}
               <div className="flex items-center justify-between gap-4">
-
                 <button
                   onClick={handleSendOtp}
                   className="text-sm text-gray-400 underline"
@@ -802,28 +447,19 @@ export default function LoginPage() {
 
                 <button
                   onClick={() => {
-
                     setStep(1);
-
                     setOtp("");
-
                     setError("");
                   }}
                   className="text-sm text-black"
                 >
                   Change Email
                 </button>
-
               </div>
-
             </div>
-
           )}
-
         </div>
-
       </div>
-
     </section>
   );
 }

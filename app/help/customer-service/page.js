@@ -59,7 +59,7 @@ export default function CustomerServicePage() {
   const [open, setOpen] = useState(null);
 
   return (
-    <section className="min-h-screen bg-white pt-24 pb-20 overflow-hidden">
+    <section className="relative z-20 min-h-screen pt-24 pb-20 overflow-hidden">
       {/* HEADING */}
       <div className="text-center mb-12 px-4">
         <div className="flex items-center justify-center gap-4">
@@ -139,7 +139,7 @@ export default function CustomerServicePage() {
                   </div>
 
                   <div
-                    className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center transition-all duration-300 group-hover:bg-black group-hover:text-white group-hover:border-black"
+                    className="w-11 h-11 text-black rounded-full border border-gray-300 flex items-center justify-center transition-all duration-300 group-hover:bg-black group-hover:text-white group-hover:border-black"
                   >
                     <i className="ri-arrow-right-up-line text-lg"></i>
                   </div>

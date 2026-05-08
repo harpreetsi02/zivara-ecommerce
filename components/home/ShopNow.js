@@ -185,7 +185,7 @@ export default function ShopNow() {
   };
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden py-16 md:py-24">
+    <section ref={sectionRef} className="relative overflow-hidden py-10 md:py-24">
       {/* GLOW */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-140 h-140 blur-3xl rounded-full pointer-events-none"></div>
 
@@ -211,7 +211,7 @@ export default function ShopNow() {
         {/* FILTERS */}
         <div
           ref={filtersRef}
-          className="mt-10 flex gap-3 overflow-x-auto no-scrollbar px-4 md:px-0 lg:justify-center"
+          className="mt-10 flex gap-3 overflow-x-auto no-scrollbar px-4 md:px-0"
         >
 
           {categories.map((cat) => (
@@ -266,7 +266,7 @@ export default function ShopNow() {
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full h-64 md:h-32 object-cover transition-all duration-700 group-hover:scale-105
+                      className="w-full h-64 md:h-120 object-cover transition-all duration-700 group-hover:scale-105
                       "
                     />
 
@@ -331,7 +331,7 @@ export default function ShopNow() {
                           </p>
                         )}
                       </div>
-                      <div className="w-9 h-9 rounded-full bg-[#f7f7f7] flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all shrink-0">
+                      <div className="w-9 h-9 text-black border border-gray-300 rounded-full bg-[#f7f7f7] flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all shrink-0">
                         <i className="ri-arrow-right-up-line text-sm"></i>
                       </div>
                     </div>

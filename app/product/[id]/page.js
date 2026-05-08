@@ -20,8 +20,6 @@ export default function ProductPage() {
   const [sizeError, setSizeError] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const touchStartX = useRef(null);
-  const searchParams = useSearchParams();
-  const subcategory = searchParams.get("subcategory");
 
   useEffect(() => {
     fetchProduct();
@@ -106,8 +104,7 @@ export default function ProductPage() {
     : [product.image];
 
   return (
-  <div className="mt-16 pb-32 md:pb-16 bg-white">
-
+  <div className="mt-16 relative z-20 pb-32 md:pb-16">
     {/* MAIN LAYOUT */}
     <div className="lg:grid lg:grid-cols-[1.15fr_.85fr] lg:gap-20 xl:gap-20 items-start">
 
@@ -116,9 +113,7 @@ export default function ProductPage() {
 
         {/* IMAGE SLIDER */}
         <div
-          className="
-            relative w-full h-115 md:h-165 lg:h-[82vh] bg-[#f8f8f8] overflow-hidden lg:rounded-2xl
-          "
+          className="relative w-full h-115 md:h-165 lg:h-[82vh] bg-[#f8f8f8] overflow-hidden lg:rounded-2xl"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -157,11 +152,9 @@ export default function ProductPage() {
           {images.length > 1 && (
             <>
               <button
-                onClick={() =>
-                  setActiveImg(
-                    (prev) => (prev - 1 + images.length) % images.length
-                  )
-                }
+                onClick={() => setActiveImg(
+                  (prev) => (prev - 1 + images.length) % images.length
+                )}
                 className="absolute left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 bg-black/30 backdrop-blur-md rounded-full flex items-center justify-center text-white"
               >
                 <i className="ri-arrow-left-s-line text-2xl"></i>
@@ -201,17 +194,14 @@ export default function ProductPage() {
             ))}
           </div>
         )}
-
       </div>
 
       {/* RIGHT SIDE */}
       <div
         className="px-5 md:pr-20 pt-10 lg:pt-20 text-gray-700 lg:sticky lg:top-24 h-fit"
       >
-
         {/* PRODUCT HEADER */}
         <div className="flex items-start justify-between gap-4">
-
           <div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight leading-none">
               {product.name}
@@ -229,14 +219,12 @@ export default function ProductPage() {
             className="shrink-0 mt-1"
           >
             <i
-              className={`${
-                liked
-                  ? "ri-heart-fill text-red-500"
-                  : "ri-heart-line text-gray-400"
+              className={`${liked
+                ? "ri-heart-fill text-red-500"
+                : "ri-heart-line text-gray-400"
               } text-3xl`}
             ></i>
           </button>
-
         </div>
 
         {/* PRICE */}
@@ -272,7 +260,6 @@ export default function ProductPage() {
 
         {/* SIZE */}
         <div className="mt-12">
-
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm uppercase tracking-[0.2em] font-medium">
               Select Size
@@ -307,45 +294,37 @@ export default function ProductPage() {
               Please select a size first.
             </p>
           )}
-
         </div>
 
         {/* BUTTONS */}
         <div
-          className=" fixed lg:static bottom-0 left-0 w-full lg:w-auto flex gap-3 px-4 lg:px-0 py-4 bg-white border-t lg:border-0 border-gray-100 z-40 mt-12"
+          className=" fixed lg:static bottom-0 left-0 w-full lg:w-auto flex gap-3 px-4 lg:px-0 py-2.5 md:py-4 bg-white border-t lg:border-0 border-gray-100 z-40 mt-12"
         >
-
           <button
             onClick={handleWishlist}
-            className=" flex items-center justify-center gap-2 border border-gray-300 rounded-full py-4 px-6 text-sm font-medium text-gray-800 w-2/5 lg:w-auto hover:border-black transition-all"
+            className=" flex items-center justify-center gap-2 border border-gray-300 rounded-full py-2.5 md:py-4 px-4 md:px-6 text-sm font-medium text-gray-800 w-2/5 lg:w-auto hover:border-black transition-all"
           >
-            <i
-              className={`${
-                liked
-                  ? "ri-heart-fill text-red-500"
-                  : "ri-heart-line"
-              } text-lg`}
+            <i className={`${liked
+                ? "ri-heart-fill text-red-500"
+                : "ri-heart-line"
+              } text-lg`
+            }
             ></i>
-
             SAVE
           </button>
 
           <button
             onClick={handleAddToCart}
             disabled={product.stock === 0}
-            className={`flex-1 py-4 rounded-full text-white text-sm uppercase tracking-[0.15em] font-medium transition-all duration-300 ${
+            className={`flex-1 py-2.5 md:py-4 rounded-full text-white text-sm uppercase tracking-[0.15em] font-medium transition-all duration-300 ${
               product.stock === 0
-                ? "bg-gray-300"
-                : added
-                ? "bg-green-600"
-                : "bg-red-500 hover:bg-neutral-800"
+                ? "bg-gray-300" : added
+                ? "bg-green-600" : "bg-red-500 hover:bg-neutral-800"
             }`}
           >
             {product.stock === 0
-              ? "Out of Stock"
-              : added
-              ? "Added ✓"
-              : "Add To Cart"}
+              ? "Out of Stock" : added
+              ? "Added ✓" : "Add To Cart"}
           </button>
         </div>
       </div>

@@ -41,7 +41,7 @@ export default function ShippingPage() {
   const router = useRouter();
 
   return (
-    <section className="min-h-screen bg-white pt-24 pb-20 overflow-hidden">
+    <section className="relative min-h-screen z-20 pt-24 pb-20 overflow-hidden">
       {/* HEADING */}
       <div className="text-center mb-12 px-4">
         <div className="flex items-center justify-center gap-4">
