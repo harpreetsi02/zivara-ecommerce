@@ -274,7 +274,7 @@ export default function Navbar() {
               className="relative"
             >
               <img
-                className="rotate-12 w-16 md:w-20 lg:w-24"
+                className="rotate-20 translate-x-4 w-18 md:w-20 lg:w-24"
                 src="/images/lips.png"
                 alt=""
               />
@@ -389,7 +389,7 @@ export default function Navbar() {
             <div className="flex items-center justify-between mb-10">
               <div className="relative">
                 <img
-                  className="rotate-12 w-16 md:w-20"
+                  className="rotate-20 translate-x-4 w-18 md:w-20 lg:w-24"
                   src="/images/lips.png"
                   alt=""
                 />

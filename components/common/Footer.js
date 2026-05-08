@@ -22,7 +22,7 @@ export default function Footer() {
             <img
               src="/images/lips.png"
               alt="zivara"
-              className="w-24 md:w-32 rotate-12 opacity-80 mx-auto"
+              className="w-24 md:w-32 translate-x-6 md:translate-x-10 rotate-18 opacity-80 mx-auto"
             />
 
             <h1
