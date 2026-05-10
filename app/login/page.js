@@ -98,7 +98,7 @@ export default function LoginPage() {
   };
 
   return (
-    <section className="min-h-screen md:mt-16 overflow-hidden">
+    <section className="min-h-screen relative z-20 md:mt-16 overflow-hidden">
       {/* LEFT / TOP SECTION */}
       <div className="grid md:grid-cols-2 min-h-screen">
         {/* VISUAL SIDE */}
